@@ -1,0 +1,1825 @@
+<!doctype html>
+<html lang="hi">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bihar CSC Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+    .nav-link {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .service-card, .quick-link-item {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .admin-tab {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .admin-tab.active {
+      background-color: rgba(255,255,255,0.3) !important;
+      border-bottom: 3px solid white !important;
+    }
+    .admin-tab-content {
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .item-row:hover {
+      background-color: #f0f0f0;
+    }
+    .delete-btn {
+      background-color: #ff4444;
+      color: white;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+    .edit-btn:hover {
+      background-color: #1e40af;
+    }
+    .important-service-card {
+      transition: all 0.3s ease;
+    }
+    .important-service-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    }
+    .sample-data-banner {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      animation: slideDown 0.5s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .add-sample-btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .add-sample-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .add-sample-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .wa-logo {
+      width: 38px;
+      height: 38px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+      font-size: 24px;
+    }
+    .donate-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div id="app" style="width: 100%; height: 100%; overflow: auto;"></div>
+  <script>
+    const defaultConfig = {
+      shop_name: "NAJIS CYBER CAFE",
+      csc_id: "CSC12345678",
+      owner_name: "Mohammad Najis",
+      tagline: "सभी सरकारी सेवाएं एक जगह",
+      phone_1: "9876543210",
+      phone_2: "8765432109",
+      whatsapp: "919876543210",
+      location: "पटना, बिहार",
+      whatsapp_group: "https://chat.whatsapp.com/G2Is5h6YrSWE9P0ISrxyUi",
+      whatsapp_channel: "https://whatsapp.com/channel/0029VakVRGQBqbr7ZrYZ8l42",
+      background_color: "#f0f4f8",
+      header_color: "#2563eb",
+      card_color: "#ffffff",
+      accent_color: "#10b981",
+      text_color: "#1f2937",
+      font_family: "Poppins",
+      font_size: 16
+    };
+
+    let allData = [];
+    let currentPage = 'home';
+    let clickCount = 0;
+    let clickTimer = null;
+    let isAdminLoggedIn = false;
+    let isSampleDataAdded = false;
+    let sdkReady = false;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allData = data;
+        updatePageContent();
+        updateCounts();
+        if (isAdminLoggedIn) {
+          updateAdminLists();
+        }
+        updateSampleDataBanner();
+      }
+    };
+
+    let itemCounter = 0;
+
+    async function initDataSDK() {
+      if (window.dataSdk && !sdkReady) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (result.isOk) {
+          sdkReady = true;
+        }
+      }
+    }
+
+    function navigateTo(page) {
+      currentPage = page;
+      updatePageContent();
+    }
+
+    function updateCounts() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+
+      const jobs = allData.filter(item => item.type === 'job');
+      const results = allData.filter(item => item.type === 'result');
+      const admits = allData.filter(item => item.type === 'admit');
+      const admissions = allData.filter(item => item.type === 'admission');
+
+      const jobsCountCard = app.querySelector('#jobs-count-card');
+      const resultsCountCard = app.querySelector('#results-count-card');
+      const admitsCountCard = app.querySelector('#admits-count-card');
+      const admissionsCountCard = app.querySelector('#admissions-count-card');
+
+      if (jobsCountCard) {
+        jobsCountCard.textContent = `${jobs.length} Jobs Available`;
+        jobsCountCard.style.color = accentColor;
+        jobsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
+      }
+      if (resultsCountCard) {
+        resultsCountCard.textContent = `${results.length} Results`;
+        resultsCountCard.style.color = accentColor;
+        resultsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
+      }
+      if (admitsCountCard) {
+        admitsCountCard.textContent = `${admits.length} Admit Cards`;
+        admitsCountCard.style.color = accentColor;
+        admitsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
+      }
+      if (admissionsCountCard) {
+        admissionsCountCard.textContent = `${admissions.length} Admissions`;
+        admissionsCountCard.style.color = accentColor;
+        admissionsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
+      }
+
+      const navJobs = app.querySelector('.nav-link[data-page="jobs"]');
+      const navResults = app.querySelector('.nav-link[data-page="results"]');
+      const navAdmits = app.querySelector('.nav-link[data-page="admits"]');
+      const navAdmissions = app.querySelector('.nav-link[data-page="admissions"]');
+
+      if (navJobs) navJobs.textContent = `💼 Jobs (${jobs.length})`;
+      if (navResults) navResults.textContent = `📊 Results (${results.length})`;
+      if (navAdmits) navAdmits.textContent = `🎫 Admit Cards (${admits.length})`;
+      if (navAdmissions) navAdmissions.textContent = `🎓 Admissions (${admissions.length})`;
+    }
+
+    function updatePageContent() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const navLinks = app.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('data-page');
+        if (linkPage === currentPage) {
+          link.style.fontWeight = '700';
+          link.style.borderBottom = '3px solid white';
+        } else {
+          link.style.fontWeight = '600';
+          link.style.borderBottom = 'none';
+        }
+      });
+
+      const homeContent = app.querySelector('#home-content');
+      const jobsContent = app.querySelector('#jobs-content');
+      const resultsContent = app.querySelector('#results-content');
+      const admitsContent = app.querySelector('#admits-content');
+      const admissionsContent = app.querySelector('#admissions-content');
+
+      if (homeContent) {
+        homeContent.style.display = currentPage === 'home' ? 'block' : 'none';
+        if (currentPage === 'home') {
+          updateHomePreviews();
+        }
+      }
+      if (jobsContent) jobsContent.style.display = currentPage === 'jobs' ? 'block' : 'none';
+      if (resultsContent) resultsContent.style.display = currentPage === 'results' ? 'block' : 'none';
+      if (admitsContent) admitsContent.style.display = currentPage === 'admits' ? 'block' : 'none';
+      if (admissionsContent) admissionsContent.style.display = currentPage === 'admissions' ? 'block' : 'none';
+
+      if (currentPage === 'jobs' && jobsContent) {
+        renderJobsList();
+      } else if (currentPage === 'results' && resultsContent) {
+        renderResultsList();
+      } else if (currentPage === 'admits' && admitsContent) {
+        renderAdmitsList();
+      } else if (currentPage === 'admissions' && admissionsContent) {
+        renderAdmissionsList();
+      }
+    }
+
+    function updateHomePreviews() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const cardColor = config.card_color || defaultConfig.card_color;
+
+      const jobs = allData.filter(item => item.type === 'job').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
+      const results = allData.filter(item => item.type === 'result').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
+      const admits = allData.filter(item => item.type === 'admit').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
+
+      const jobsPreview = app.querySelector('#latest-jobs-preview');
+      const resultsPreview = app.querySelector('#latest-results-preview');
+      const admitsPreview = app.querySelector('#latest-admits-preview');
+
+      if (jobsPreview) {
+        if (jobs.length === 0) {
+          jobsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
+        } else {
+          jobsPreview.innerHTML = jobs.map(job => `
+            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
+              ${job.job_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
+              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${job.job_title}</h4>
+              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px; margin-bottom: 0.25rem;">Total Post: ${job.job_posts}</p>
+              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${job.job_status}</p>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (resultsPreview) {
+        if (results.length === 0) {
+          resultsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
+        } else {
+          resultsPreview.innerHTML = results.map(result => `
+            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
+              ${result.result_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
+              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${result.result_title}</h4>
+              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${result.result_status}</p>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (admitsPreview) {
+        if (admits.length === 0) {
+          admitsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
+        } else {
+          admitsPreview.innerHTML = admits.map(admit => `
+            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
+              ${admit.admit_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
+              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admit.admit_title}</h4>
+              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${admit.admit_status}</p>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function renderJobsList() {
+      const jobsListContainer = document.getElementById('jobs-list-container');
+      if (!jobsListContainer) return;
+
+      const jobs = allData.filter(item => item.type === 'job').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
+      
+      if (jobs.length === 0) {
+        jobsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No jobs available</p>';
+        return;
+      }
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      jobsListContainer.innerHTML = jobs.map(job => `
+        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+          ${job.job_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
+          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${job.job_title}</h3>
+          <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px; margin-bottom: 0.25rem;"><strong>Posts:</strong> ${job.job_posts}</p>
+          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${job.job_status}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderResultsList() {
+      const resultsListContainer = document.getElementById('results-list-container');
+      if (!resultsListContainer) return;
+
+      const results = allData.filter(item => item.type === 'result').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
+      
+      if (results.length === 0) {
+        resultsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No results available</p>';
+        return;
+      }
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      resultsListContainer.innerHTML = results.map(result => `
+        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+          ${result.result_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
+          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${result.result_title}</h3>
+          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${result.result_status}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAdmitsList() {
+      const admitsListContainer = document.getElementById('admits-list-container');
+      if (!admitsListContainer) return;
+
+      const admits = allData.filter(item => item.type === 'admit').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
+      
+      if (admits.length === 0) {
+        admitsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No admit cards available</p>';
+        return;
+      }
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      admitsListContainer.innerHTML = admits.map(admit => `
+        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+          ${admit.admit_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
+          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admit.admit_title}</h3>
+          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${admit.admit_status}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAdmissionsList() {
+      const admissionsListContainer = document.getElementById('admissions-list-container');
+      if (!admissionsListContainer) return;
+
+      const admissions = allData.filter(item => item.type === 'admission').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
+      
+      if (admissions.length === 0) {
+        admissionsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No admissions available</p>';
+        return;
+      }
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      admissionsListContainer.innerHTML = admissions.map(admission => `
+        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
+          ${admission.admission_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
+          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admission.admission_title}</h3>
+          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${admission.admission_status}</p>
+        </div>
+      `).join('');
+    }
+
+    function switchAdminTab(tabName) {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const tabs = app.querySelectorAll('.admin-tab');
+      tabs.forEach(tab => {
+        if (tab.getAttribute('data-tab') === tabName) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      const tabContents = app.querySelectorAll('.admin-tab-content');
+      tabContents.forEach(content => {
+        content.style.display = 'none';
+      });
+
+      const activeContent = app.querySelector(`#admin-tab-${tabName}`);
+      if (activeContent) {
+        activeContent.style.display = 'block';
+      }
+    }
+
+    function updateAdminLists() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const jobs = allData.filter(item => item.type === 'job');
+      const results = allData.filter(item => item.type === 'result');
+      const admits = allData.filter(item => item.type === 'admit');
+      const admissions = allData.filter(item => item.type === 'admission');
+
+      const jobsList = app.querySelector('#jobs-list');
+      const resultsList = app.querySelector('#results-list');
+      const admitsList = app.querySelector('#admits-list');
+      const admissionsList = app.querySelector('#admissions-list');
+
+      if (jobsList) {
+        if (jobs.length === 0) {
+          jobsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No jobs added yet</p>';
+        } else {
+          jobsList.innerHTML = jobs.map(job => `
+            <div class="item-row">
+              <span style="flex: 1;">${job.job_title}</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="edit-btn" onclick="editItem('${job.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
+                <button class="delete-btn" onclick="deleteItem('${job.__backendId}')">Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (resultsList) {
+        if (results.length === 0) {
+          resultsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No results added yet</p>';
+        } else {
+          resultsList.innerHTML = results.map(result => `
+            <div class="item-row">
+              <span style="flex: 1;">${result.result_title}</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="edit-btn" onclick="editItem('${result.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
+                <button class="delete-btn" onclick="deleteItem('${result.__backendId}')">Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (admitsList) {
+        if (admits.length === 0) {
+          admitsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No admit cards added yet</p>';
+        } else {
+          admitsList.innerHTML = admits.map(admit => `
+            <div class="item-row">
+              <span style="flex: 1;">${admit.admit_title}</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="edit-btn" onclick="editItem('${admit.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
+                <button class="delete-btn" onclick="deleteItem('${admit.__backendId}')">Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (admissionsList) {
+        if (admissions.length === 0) {
+          admissionsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No admissions added yet</p>';
+        } else {
+          admissionsList.innerHTML = admissions.map(admission => `
+            <div class="item-row">
+              <span style="flex: 1;">${admission.admission_title}</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="edit-btn" onclick="editItem('${admission.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
+                <button class="delete-btn" onclick="deleteItem('${admission.__backendId}')">Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      const jobsCount = app.querySelector('#admin-tab-jobs h5');
+      const resultsCount = app.querySelector('#admin-tab-results h5');
+      const admitsCount = app.querySelector('#admin-tab-admits h5');
+      const admissionsCount = app.querySelector('#admin-tab-admissions h5');
+
+      if (jobsCount) jobsCount.textContent = `Existing Jobs (${jobs.length})`;
+      if (resultsCount) resultsCount.textContent = `Existing Results (${results.length})`;
+      if (admitsCount) admitsCount.textContent = `Existing Admit Cards (${admits.length})`;
+      if (admissionsCount) admissionsCount.textContent = `Existing Admissions (${admissions.length})`;
+    }
+
+    function updateSampleDataBanner() {
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const adminContent = app.querySelector('#admin-content');
+      if (!adminContent) return;
+
+      let banner = app.querySelector('#sample-data-banner');
+      
+      if (allData.length === 0 && !isSampleDataAdded) {
+        if (!banner) {
+          banner = document.createElement('div');
+          banner.id = 'sample-data-banner';
+          banner.className = 'sample-data-banner';
+          banner.innerHTML = `
+            <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Demo ke liye Sample Data Add karein!</p>
+            <button id="add-sample-data-btn" class="add-sample-btn">
+              Sample Data Add Karein (9 Items)
+            </button>
+          `;
+          adminContent.insertBefore(banner, adminContent.firstChild);
+          
+          const addBtn = app.querySelector('#add-sample-data-btn');
+          if (addBtn) {
+            addBtn.addEventListener('click', addSampleData);
+          }
+        }
+      } else if (banner) {
+        banner.remove();
+      }
+    }
+
+    async function addSampleData() {
+      if (!sdkReady || !window.dataSdk) {
+        const statusMsg = document.createElement('p');
+        statusMsg.textContent = 'SDK not ready yet. Please wait...';
+        statusMsg.style.color = '#ef4444';
+        statusMsg.style.textAlign = 'center';
+        statusMsg.style.marginTop = '0.5rem';
+        document.getElementById('sample-data-banner').appendChild(statusMsg);
+        setTimeout(() => statusMsg.remove(), 2000);
+        return;
+      }
+
+      const btn = document.getElementById('add-sample-data-btn');
+      if (!btn) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Adding Sample Data...';
+
+      try {
+        const sampleData = [
+          {
+            type: 'job',
+            job_title: 'BPSC 69th Combined Competitive Exam 2024',
+            job_posts: '500+ Posts',
+            job_status: 'Application Started - Last Date: 15 March 2024',
+            job_is_new: true,
+            created_at: Date.now() - 8000
+          },
+          {
+            type: 'job',
+            job_title: 'Railway Group D Recruitment 2024',
+            job_posts: '50000+ Posts',
+            job_status: 'Coming Soon - March 2024',
+            job_is_new: true,
+            created_at: Date.now() - 7000
+          },
+          {
+            type: 'job',
+            job_title: 'SSC CGL 2024 Notification',
+            job_posts: '8000+ Posts',
+            job_status: 'Registration Open - Apply Now',
+            job_is_new: false,
+            created_at: Date.now() - 6000
+          },
+          {
+            type: 'result',
+            result_title: 'BPSC 68th Preliminary Result 2024',
+            result_status: 'Declared - Check Now',
+            result_is_new: true,
+            created_at: Date.now() - 5000
+          },
+          {
+            type: 'result',
+            result_title: 'Bihar Police Constable Result',
+            result_status: 'Available Now - Download',
+            result_is_new: false,
+            created_at: Date.now() - 4000
+          },
+          {
+            type: 'admit',
+            admit_title: 'BPSC 69th Preliminary Admit Card',
+            admit_status: 'Released - Download Now',
+            admit_is_new: true,
+            created_at: Date.now() - 3000
+          },
+          {
+            type: 'admit',
+            admit_title: 'SSC CHSL Tier-1 Admit Card 2024',
+            admit_status: 'Released - Download Now',
+            admit_is_new: false,
+            created_at: Date.now() - 2000
+          },
+          {
+            type: 'admission',
+            admission_title: 'IIT JEE Main 2024 Registration',
+            admission_status: 'Application Open - Last Date: 20 March',
+            admission_is_new: true,
+            created_at: Date.now() - 1000
+          },
+          {
+            type: 'admission',
+            admission_title: 'Bihar B.Ed Entrance 2024',
+            admission_status: 'Form Available - Apply Now',
+            admission_is_new: false,
+            created_at: Date.now()
+          }
+        ];
+
+        for (const item of sampleData) {
+          await window.dataSdk.create(item);
+        }
+
+        isSampleDataAdded = true;
+        btn.textContent = 'Sample Data Added!';
+        
+        setTimeout(() => {
+          const banner = document.getElementById('sample-data-banner');
+          if (banner) banner.remove();
+        }, 2000);
+
+      } catch (error) {
+        btn.disabled = false;
+        btn.textContent = 'Failed - Try Again';
+      }
+    }
+
+    // Copy UPI ID function
+    function copyUPIId() {
+      const upiId = '9709701986@ybl';
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(upiId).then(() => {
+          showPaymentStatus('✓ UPI ID Copied!', 'success');
+        }).catch(() => {
+          showPaymentStatus('UPI ID: ' + upiId, 'info');
+        });
+      } else {
+        showPaymentStatus('UPI ID: ' + upiId, 'info');
+      }
+    }
+
+    // Open UPI Payment function
+    function openUPIPay(amount) {
+      const upiId = '9709701986@ybl';
+      const name = 'Social Service';
+      const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+      
+      window.open(upiUrl, '_blank');
+      showPaymentStatus('Opening payment app...', 'info');
+    }
+
+    // Show payment status message
+    function showPaymentStatus(message, type) {
+      const statusDiv = document.getElementById('payment-status');
+      if (!statusDiv) return;
+      
+      statusDiv.textContent = message;
+      statusDiv.style.display = 'block';
+      
+      if (type === 'success') {
+        statusDiv.style.backgroundColor = '#d1fae5';
+        statusDiv.style.color = '#065f46';
+      } else if (type === 'error') {
+        statusDiv.style.backgroundColor = '#fee2e2';
+        statusDiv.style.color = '#991b1b';
+      } else {
+        statusDiv.style.backgroundColor = '#dbeafe';
+        statusDiv.style.color = '#1e40af';
+      }
+      
+      setTimeout(() => {
+        statusDiv.style.display = 'none';
+      }, 3000);
+    }
+
+    window.deleteItem = async function(backendId) {
+      if (!sdkReady || !window.dataSdk) return;
+
+      const item = allData.find(d => d.__backendId === backendId);
+      if (!item) return;
+
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      const deleteBtn = app.querySelector(`button[onclick="deleteItem('${backendId}')"]`);
+      if (deleteBtn) {
+        const originalText = deleteBtn.innerHTML;
+        deleteBtn.innerHTML = 'Deleting...';
+        deleteBtn.disabled = true;
+      }
+
+      const result = await window.dataSdk.delete(item);
+      
+      if (deleteBtn) {
+        deleteBtn.disabled = false;
+        if (!result.isOk) {
+          deleteBtn.innerHTML = 'Failed';
+          setTimeout(() => {
+            deleteBtn.innerHTML = originalText;
+          }, 2000);
+        }
+      }
+    }
+
+    window.editItem = function(backendId) {
+      const item = allData.find(d => d.__backendId === backendId);
+      if (!item) return;
+
+      const app = document.getElementById('app');
+      if (!app) return;
+
+      if (item.type === 'job') {
+        const titleInput = app.querySelector('#job-title');
+        const postsInput = app.querySelector('#job-posts');
+        const statusInput = app.querySelector('#job-status');
+        const isNewCheckbox = app.querySelector('#job-is-new');
+        const submitBtn = app.querySelector('#job-form button[type="submit"]');
+        
+        titleInput.value = item.job_title || '';
+        postsInput.value = item.job_posts || '';
+        statusInput.value = item.job_status || '';
+        isNewCheckbox.checked = item.job_is_new || false;
+        
+        submitBtn.textContent = 'Update Job';
+        submitBtn.setAttribute('data-edit-id', backendId);
+        
+        switchAdminTab('jobs');
+      } else if (item.type === 'result') {
+        const titleInput = app.querySelector('#result-title');
+        const statusInput = app.querySelector('#result-status');
+        const isNewCheckbox = app.querySelector('#result-is-new');
+        const submitBtn = app.querySelector('#result-form button[type="submit"]');
+        
+        titleInput.value = item.result_title || '';
+        statusInput.value = item.result_status || '';
+        isNewCheckbox.checked = item.result_is_new || false;
+        
+        submitBtn.textContent = 'Update Result';
+        submitBtn.setAttribute('data-edit-id', backendId);
+        
+        switchAdminTab('results');
+      } else if (item.type === 'admit') {
+        const titleInput = app.querySelector('#admit-title');
+        const statusInput = app.querySelector('#admit-status');
+        const isNewCheckbox = app.querySelector('#admit-is-new');
+        const submitBtn = app.querySelector('#admit-form button[type="submit"]');
+        
+        titleInput.value = item.admit_title || '';
+        statusInput.value = item.admit_status || '';
+        isNewCheckbox.checked = item.admit_is_new || false;
+        
+        submitBtn.textContent = 'Update Admit Card';
+        submitBtn.setAttribute('data-edit-id', backendId);
+        
+        switchAdminTab('admits');
+      } else if (item.type === 'admission') {
+        const titleInput = app.querySelector('#admission-title');
+        const statusInput = app.querySelector('#admission-status');
+        const isNewCheckbox = app.querySelector('#admission-is-new');
+        const submitBtn = app.querySelector('#admission-form button[type="submit"]');
+        
+        titleInput.value = item.admission_title || '';
+        statusInput.value = item.admission_status || '';
+        isNewCheckbox.checked = item.admission_is_new || false;
+        
+        submitBtn.textContent = 'Update Admission';
+        submitBtn.setAttribute('data-edit-id', backendId);
+        
+        switchAdminTab('admissions');
+      }
+    }
+
+    function showStatusMessage(elementId, message, type) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+
+      element.textContent = message;
+      
+      if (type === 'success') {
+        element.style.color = '#10b981';
+      } else if (type === 'error') {
+        element.style.color = '#ef4444';
+      } else {
+        element.style.color = '#f59e0b';
+      }
+
+      if (type === 'success' || type === 'error') {
+        setTimeout(() => {
+          element.textContent = '';
+        }, 3000);
+      }
+    }
+
+    async function onConfigChange(config) {
+      renderContent(config);
+    }
+
+    function renderContent(config) {
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const headerColor = config.header_color || defaultConfig.header_color;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontSize = config.font_size || defaultConfig.font_size;
+
+      const jobs = allData.filter(item => item.type === 'job');
+      const results = allData.filter(item => item.type === 'result');
+      const admits = allData.filter(item => item.type === 'admit');
+      const admissions = allData.filter(item => item.type === 'admission');
+
+      const services = [
+        "Ration Card", "Voter Card", "PAN Card (Personal & Society)", "Ayushman Card", "Labour Card (Update)",
+        "Kisan Credit Card", "Divyang Card + Disability Certificate", "PRAN Card", "Farmer Registration", "Passport Service",
+        "Rail Ticket", "EPFO (PF)", "Bike Insurance", "Driving License", "Jeevan Jyoti Premium Payment",
+        "Bill Payment", "Caste/Residence/Income Certificate", "Admission Form", "JOB VACANCY INFORMATION", "Cash Withdrawal/Deposit",
+        "Scholarship Form", "Aadhar Card Print", "Photocopy", "SIM Activation", "Passport Size Photo",
+        "GST Registration", "ABC ID Card", "E-KYC Pension", "Health Card", "Diesel Subsidy",
+        "Examination", "PM Kisan Application & E-KYC", "Crop Insurance", "Recharge", "Dakhil Kharij",
+        "Land Receipt", "New Ration Card + Name Add/Remove", "Online Scholarship", "Jeevan Pramaan", "FASTag",
+        "Biodata (CV/RESUME)", "Crop Insurance", "New Electricity Connection", "Passport", "Online Account Opening",
+        "Aadhar Card Correction", "Online New Gas Connection", "SIM Recharge"
+      ];
+
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <main style="width: 100%; min-height: 100%; background-color: ${backgroundColor}; font-family: ${customFont}, sans-serif; padding: 1rem;">
+          <!-- Header -->
+          <div style="background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              <div style="flex: 1; min-width: 200px;">
+                <h1 id="admin-trigger" style="font-size: ${baseFontSize * 1.8}px; font-weight: 800; margin-bottom: 0.25rem; cursor: pointer; user-select: none;">🏪 ${config.shop_name || defaultConfig.shop_name}</h1>
+                <p style="font-size: ${baseFontSize * 0.95}px; opacity: 0.95; font-weight: 500;">📍 ${config.location || defaultConfig.location}</p>
+                <p style="font-size: ${baseFontSize * 0.85}px; opacity: 0.9; margin-top: 0.25rem;">🆔 CSC ID: ${config.csc_id || defaultConfig.csc_id}</p>
+              </div>
+              <div style="text-align: right;">
+                <p style="font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem;">👤 Owner: ${config.owner_name || defaultConfig.owner_name}</p>
+                <p style="font-size: ${baseFontSize * 0.9}px; font-weight: 600;">✨ ${config.tagline || defaultConfig.tagline}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div style="background-color: ${headerColor}; border-radius: 8px; padding: 0.75rem; margin-bottom: 0rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow-x: auto; white-space: nowrap;">
+            <div style="display: inline-flex; gap: 1rem; min-width: 100%;">
+              <div class="nav-link" data-page="home" style="color: white; padding: 0.5rem 1rem; font-weight: 600; font-size: ${baseFontSize * 0.9}px; border-bottom: 3px solid white;">🏠 Home</div>
+              <div class="nav-link" data-page="jobs" style="color: white; padding: 0.5rem 1rem; font-weight: 600; font-size: ${baseFontSize * 0.9}px;">💼 Jobs (${jobs.length})</div>
+              <div class="nav-link" data-page="results" style="color: white; padding: 0.5rem 1rem; font-weight: 600; font-size: ${baseFontSize * 0.9}px;">📊 Results (${results.length})</div>
+              <div class="nav-link" data-page="admits" style="color: white; padding: 0.5rem 1rem; font-weight: 600; font-size: ${baseFontSize * 0.9}px;">🎫 Admit Cards (${admits.length})</div>
+              <div class="nav-link" data-page="admissions" style="color: white; padding: 0.5rem 1rem; font-weight: 600; font-size: ${baseFontSize * 0.9}px;">🎓 Admissions (${admissions.length})</div>
+            </div>
+          </div>
+
+          <!-- Separator Line -->
+          <div style="height: 2px; background: linear-gradient(90deg, transparent 0%, ${headerColor} 50%, transparent 100%); margin: 0.5rem 0;"></div>
+
+          <!-- Scrolling Marquee Text -->
+          <div style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); border-radius: 8px; padding: 0.75rem; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; margin-top: 0.5rem;">
+            <marquee behavior="scroll" direction="left" scrollamount="5" style="color: white; font-weight: 700; font-size: ${baseFontSize * 0.95}px;">
+              ✅ All Government Services Available | 📝 Fill Online Forms from Home | 📞 Call: ${config.phone_1 || defaultConfig.phone_1}
+            </marquee>
+          </div>
+
+          <!-- Home Content -->
+          <div id="home-content">
+            <!-- Services Section -->
+            <div style="margin-bottom: 1.5rem;">
+              <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Our Services</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <div class="service-card" style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                  <div style="font-size: ${baseFontSize * 2.5}px; margin-bottom: 0.75rem;">💼</div>
+                  <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem;">Job Updates</h3>
+                  <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px;">Latest Government Job Information</p>
+                  <p id="jobs-count-card" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 1.1}px; margin-top: 0.5rem;">${jobs.length} Jobs Available</p>
+                </div>
+                <div class="service-card" style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                  <div style="font-size: ${baseFontSize * 2.5}px; margin-bottom: 0.75rem;">📊</div>
+                  <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem;">Results</h3>
+                  <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px;">Check All Exam Results Here</p>
+                  <p id="results-count-card" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 1.1}px; margin-top: 0.5rem;">${results.length} Results</p>
+                </div>
+                <div class="service-card" style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                  <div style="font-size: ${baseFontSize * 2.5}px; margin-bottom: 0.75rem;">🎫</div>
+                  <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem;">Admit Cards</h3>
+                  <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px;">Download Admit Cards</p>
+                  <p id="admits-count-card" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 1.1}px; margin-top: 0.5rem;">${admits.length} Admit Cards</p>
+                </div>
+                <div class="service-card" style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                  <div style="font-size: ${baseFontSize * 2.5}px; margin-bottom: 0.75rem;">🎓</div>
+                  <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem;">Admissions</h3>
+                  <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px;">College Admission Information</p>
+                  <p id="admissions-count-card" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 1.1}px; margin-top: 0.5rem;">${admissions.length} Admissions</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Latest Updates Section -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <!-- Latest Jobs -->
+              <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: ${baseFontSize * 1.8}px;">💼</span>
+                  Latest Jobs
+                </h3>
+                <div id="latest-jobs-preview"></div>
+                <div class="nav-link" data-page="jobs" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 0.9}px; margin-top: 1rem; display: inline-block; cursor: pointer; text-decoration: none;">
+                  View All Jobs →
+                </div>
+              </div>
+
+              <!-- Latest Results -->
+              <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: ${baseFontSize * 1.8}px;">📊</span>
+                  Latest Results
+                </h3>
+                <div id="latest-results-preview"></div>
+                <div class="nav-link" data-page="results" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 0.9}px; margin-top: 1rem; display: inline-block; cursor: pointer; text-decoration: none;">
+                  View All Results →
+                </div>
+              </div>
+
+              <!-- Latest Admit Cards -->
+              <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: ${baseFontSize * 1.8}px;">🎫</span>
+                  Admit Cards
+                </h3>
+                <div id="latest-admits-preview"></div>
+                <div class="nav-link" data-page="admits" style="color: ${accentColor}; font-weight: 700; font-size: ${baseFontSize * 0.9}px; margin-top: 1rem; display: inline-block; cursor: pointer; text-decoration: none;">
+                  View All Admit Cards →
+                </div>
+              </div>
+            </div>
+
+            <!-- Important Services Section -->
+            <div style="margin-bottom: 1.5rem;">
+              <h2 style="background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); color: white; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Important Services</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem;">
+                ${services.map((service, index) => `
+                  <div class="important-service-card" style="padding: 0.75rem; border-left: 5px solid ${accentColor}; background-color: ${cardColor}; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 26px; width: 26px; height: 26px; background: linear-gradient(135deg, ${headerColor}, ${accentColor}); color: white; border-radius: 50%; font-size: ${baseFontSize * 0.75}px; font-weight: 700; flex-shrink: 0;">${index + 1}</span>
+                    <span style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;">${service}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Donation Section - Working Buttons -->
+            <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); border-radius: 12px; padding: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.2); margin-bottom: 1.5rem; position: relative; overflow: hidden; border: 3px solid rgba(255,255,255,0.3);">
+              <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background-color: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+              <div style="position: absolute; bottom: -25px; left: -25px; width: 100px; height: 100px; background-color: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+              
+              <div style="position: relative; z-index: 1; text-align: center;">
+                <div style="margin-bottom: 1rem;">
+                  <div style="font-size: ${baseFontSize * 2.5}px; margin-bottom: 0.5rem;">🙏❤️</div>
+                  <h2 style="color: white; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: ${customFont}, sans-serif;">समाज सेवा में हाथ बटाएं</h2>
+                  <p style="color: white; font-size: ${baseFontSize * 0.95}px; line-height: 1.6; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto;">
+                    आपके ₹10 से भी किसी का भला हो सकता है<br>
+                    <span style="font-size: ${baseFontSize * 0.85}px;">जरूरतमंद, गरीब छात्र, बेसहारा लोगों की मदद करें</span>
+                  </p>
+                </div>
+
+                <div style="background-color: white; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 400px; margin-left: auto; margin-right: auto;">
+                  
+                  <div style="background-color: #f0f4f8; border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem;">
+                    <p style="color: #666; font-size: ${baseFontSize * 0.75}px; font-weight: 600; margin: 0 0 0.5rem 0;">📱 UPI ID</p>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+                      <p id="upi-id-text" style="color: ${headerColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin: 0; font-family: monospace;">9709701986@ybl</p>
+                      <button id="copy-upi-btn" class="donate-btn" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: ${baseFontSize * 0.75}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s;">📋 Copy</button>
+                    </div>
+                  </div>
+
+                  <p style="color: #666; font-size: ${baseFontSize * 0.8}px; font-weight: 600; margin: 0 0 0.75rem 0;">Quick Donate Amount:</p>
+                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;">
+                    <button data-amount="10" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹10</button>
+                    <button data-amount="20" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹20</button>
+                    <button data-amount="50" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹50</button>
+                    <button data-amount="100" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹100</button>
+                  </div>
+
+                  <div id="payment-status" style="margin-top: 0.75rem; padding: 0.5rem; border-radius: 6px; font-size: ${baseFontSize * 0.8}px; font-weight: 600; display: none;"></div>
+                </div>
+
+                <div style="background-color: rgba(255,255,255,0.2); border-radius: 8px; padding: 0.75rem; backdrop-filter: blur(10px);">
+                  <p style="color: white; font-size: ${baseFontSize * 0.85}px; font-weight: 600; margin: 0; line-height: 1.5;">
+                    🌟 आपका हर रुपया सही जगह इस्तेमाल होगा 🌟<br>
+                    <span style="font-size: ${baseFontSize * 0.75}px;">पारदर्शिता और ईमानदारी का वादा</span>
+                  </p>
+                </div>
+
+                <p style="color: white; font-size: ${baseFontSize * 0.75}px; font-weight: 600; margin-top: 0.75rem; opacity: 0.9;">
+                  किसी भी सवाल के लिए: <a href="https://wa.me/${config.whatsapp || defaultConfig.whatsapp}?text=Donation के बारे में जानकारी चाहिए" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">WhatsApp करें</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- WhatsApp Join Section -->
+            <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1.5rem; border: 2px solid ${accentColor};">
+              <h3 style="color: ${headerColor}; font-size: ${baseFontSize * 1.3}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Join for Updates</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                <a href="${config.whatsapp_group || defaultConfig.whatsapp_group}" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 1rem; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 700; font-size: ${baseFontSize * 0.95}px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                  <div class="wa-logo">💬</div>
+                  <span>Join WhatsApp Group</span>
+                </a>
+                <a href="${config.whatsapp_channel || defaultConfig.whatsapp_channel}" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 1rem; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 700; font-size: ${baseFontSize * 0.95}px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+                  <div class="wa-logo">📢</div>
+                  <span>Follow Channel</span>
+                </a>
+              </div>
+              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px; text-align: center; line-height: 1.5; font-weight: 600;">
+                Get Latest Updates on Admissions, Exams, Results, Vacancies, Scholarships, Employment
+              </p>
+            </div>
+
+            <!-- Contact Section -->
+            <div style="background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); border-radius: 10px; padding: 1.25rem; box-shadow: 0 6px 20px rgba(0,0,0,0.15); margin-bottom: 1rem; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; background-color: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+              <div style="position: absolute; bottom: -30px; left: -30px; width: 120px; height: 120px; background-color: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+              
+              <div style="position: relative; z-index: 1;">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                  <div style="display: inline-flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 50%; margin-bottom: 0.75rem;">
+                    <span style="font-size: ${baseFontSize * 1.5}px;">📱</span>
+                  </div>
+                  <div>
+                    <h2 style="color: white; font-size: ${baseFontSize * 1.4}px; font-weight: 800; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Contact Us</h2>
+                    <p style="color: white; font-size: ${baseFontSize * 0.85}px; line-height: 1.4; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                      Fill online exam forms, govt schemes, scholarship admissions from home
+                    </p>
+                  </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; max-width: 600px; margin: 0 auto;">
+                  <a href="https://wa.me/${config.whatsapp || defaultConfig.whatsapp}?text=Hello" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 0.9rem 1rem; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 700; font-size: ${baseFontSize * 0.95}px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.4rem; border: 2px solid rgba(255,255,255,0.3);">
+                    <span style="font-size: ${baseFontSize * 1.3}px;">💬</span>
+                    <span>WhatsApp</span>
+                  </a>
+                  <a href="tel:${config.phone_1 || defaultConfig.phone_1}" style="background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); color: white; padding: 0.9rem 1rem; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 700; font-size: ${baseFontSize * 0.95}px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.4rem; border: 2px solid rgba(255,255,255,0.3);">
+                    <span style="font-size: ${baseFontSize * 1.3}px;">📞</span>
+                    <span>Call Now</span>
+                  </a>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.3);">
+                  <p style="color: white; font-size: ${baseFontSize * 0.8}px; font-weight: 600; margin-bottom: 0.3rem;">Our Numbers</p>
+                  <p style="color: rgba(255,255,255,0.95); font-size: ${baseFontSize * 0.9}px; font-weight: 700;">${config.phone_1 || defaultConfig.phone_1} / ${config.phone_2 || defaultConfig.phone_2}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jobs Content -->
+          <div id="jobs-content" style="display: none;">
+            <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Government Jobs</h2>
+            <div id="jobs-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
+          </div>
+
+          <!-- Results Content -->
+          <div id="results-content" style="display: none;">
+            <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Results</h2>
+            <div id="results-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
+          </div>
+
+          <!-- Admits Content -->
+          <div id="admits-content" style="display: none;">
+            <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Admit Cards</h2>
+            <div id="admits-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
+          </div>
+
+          <!-- Admissions Content -->
+          <div id="admissions-content" style="display: none;">
+            <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Admissions</h2>
+            <div id="admissions-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
+          </div>
+
+          <!-- Admin Panel -->
+          <div id="admin-panel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 9999; overflow-y: auto; padding: 1rem; box-sizing: border-box;">
+            <div style="max-width: 600px; margin: 2rem auto; background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); border-radius: 12px; padding: 2rem; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+              <h2 style="color: white; font-size: ${baseFontSize * 1.8}px; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Admin Panel</h2>
+              
+              <!-- Login Form -->
+              <div id="admin-login" style="background-color: rgba(255,255,255,0.95); border-radius: 8px; padding: 1.5rem;">
+                <input type="password" id="admin-password" placeholder="Enter Admin Password" style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: ${baseFontSize}px; margin-bottom: 1rem; box-sizing: border-box;">
+                <button id="admin-login-btn" style="width: 100%; background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 700; font-size: ${baseFontSize}px; cursor: pointer;">
+                  Login
+                </button>
+                <p id="admin-error" style="display: none; color: #ef4444; text-align: center; margin-top: 0.75rem; font-weight: 600;">Wrong Password!</p>
+              </div>
+
+              <!-- Admin Content -->
+              <div id="admin-content" style="display: none;">
+                <!-- Admin Tabs -->
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; background-color: rgba(255,255,255,0.2); border-radius: 8px; padding: 0.5rem; overflow-x: auto;">
+                  <div class="admin-tab active" data-tab="jobs" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; background-color: rgba(255,255,255,0.3); border-bottom: 3px solid white; min-width: 80px;">Jobs</div>
+                  <div class="admin-tab" data-tab="results" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Results</div>
+                  <div class="admin-tab" data-tab="admits" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Admits</div>
+                  <div class="admin-tab" data-tab="admissions" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Admissions</div>
+                </div>
+
+                <!-- Jobs Tab -->
+                <div id="admin-tab-jobs" class="admin-tab-content" style="background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                  <h4 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 700; margin-bottom: 1rem;">
+                    Add New Job
+                  </h4>
+                  <form id="job-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" id="job-title" placeholder="Job Title (e.g., BPSC 69th Combined Competitive Exam)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="job-posts" placeholder="Total Posts (e.g., 500+ Posts)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="job-status" placeholder="Status (e.g., Application Started - Last Date: 15 March 2024)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: ${baseFontSize * 0.9}px; color: ${textColor};">
+                      <input type="checkbox" id="job-is-new" style="width: 18px; height: 18px; cursor: pointer;">
+                      <span>Mark as NEW?</span>
+                    </label>
+                    <button type="submit" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer;">
+                      Add Job
+                    </button>
+                  </form>
+                  <p id="job-status-msg" style="margin-top: 0.75rem; text-align: center; font-weight: 600; font-size: ${baseFontSize * 0.9}px;"></p>
+                  
+                  <div style="margin-top: 1.5rem; border-top: 2px solid #eee; padding-top: 1rem;">
+                    <h5 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.75rem;">
+                      Existing Jobs (${jobs.length})
+                    </h5>
+                    <div id="jobs-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto;"></div>
+                  </div>
+                </div>
+
+                <!-- Results Tab -->
+                <div id="admin-tab-results" class="admin-tab-content" style="display: none; background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                  <h4 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 700; margin-bottom: 1rem;">
+                    Add New Result
+                  </h4>
+                  <form id="result-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" id="result-title" placeholder="Result Title (e.g., BPSC 68th Preliminary Result)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="result-status" placeholder="Status (e.g., Declared - Check Now)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: ${baseFontSize * 0.9}px; color: ${textColor};">
+                      <input type="checkbox" id="result-is-new" style="width: 18px; height: 18px; cursor: pointer;">
+                      <span>Mark as NEW?</span>
+                    </label>
+                    <button type="submit" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer;">
+                      Add Result
+                    </button>
+                  </form>
+                  <p id="result-status-msg" style="margin-top: 0.75rem; text-align: center; font-weight: 600; font-size: ${baseFontSize * 0.9}px;"></p>
+                  
+                  <div style="margin-top: 1.5rem; border-top: 2px solid #eee; padding-top: 1rem;">
+                    <h5 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.75rem;">
+                      Existing Results (${results.length})
+                    </h5>
+                    <div id="results-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto;"></div>
+                  </div>
+                </div>
+
+                <!-- Admits Tab -->
+                <div id="admin-tab-admits" class="admin-tab-content" style="display: none; background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                  <h4 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 700; margin-bottom: 1rem;">
+                    Add New Admit Card
+                  </h4>
+                  <form id="admit-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" id="admit-title" placeholder="Admit Card Title (e.g., BPSC 69th Preliminary Admit Card)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="admit-status" placeholder="Status (e.g., Released - Download Now)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: ${baseFontSize * 0.9}px; color: ${textColor};">
+                      <input type="checkbox" id="admit-is-new" style="width: 18px; height: 18px; cursor: pointer;">
+                      <span>Mark as NEW?</span>
+                    </label>
+                    <button type="submit" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer;">
+                      Add Admit Card
+                    </button>
+                  </form>
+                  <p id="admit-status-msg" style="margin-top: 0.75rem; text-align: center; font-weight: 600; font-size: ${baseFontSize * 0.9}px;"></p>
+                  
+                  <div style="margin-top: 1.5rem; border-top: 2px solid #eee; padding-top: 1rem;">
+                    <h5 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.75rem;">
+                      Existing Admit Cards (${admits.length})
+                    </h5>
+                    <div id="admits-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto;"></div>
+                  </div>
+                </div>
+
+                <!-- Admissions Tab -->
+                <div id="admin-tab-admissions" class="admin-tab-content" style="display: none; background-color: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                  <h4 style="color: ${headerColor}; font-size: ${baseFontSize * 1.2}px; font-weight: 700; margin-bottom: 1rem;">
+                    Add New Admission
+                  </h4>
+                  <form id="admission-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" id="admission-title" placeholder="Admission Title (e.g., IIT JEE Main 2024 Registration)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="admission-status" placeholder="Status (e.g., Application Open - Last Date: 15 March)" required style="padding: 0.6rem; border: 1px solid #ddd; border-radius: 6px; font-size: ${baseFontSize * 0.9}px; width: 100%; box-sizing: border-box;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: ${baseFontSize * 0.9}px; color: ${textColor};">
+                      <input type="checkbox" id="admission-is-new" style="width: 18px; height: 18px; cursor: pointer;">
+                      <span>Mark as NEW?</span>
+                    </label>
+                    <button type="submit" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer;">
+                      Add Admission
+                    </button>
+                  </form>
+                  <p id="admission-status-msg" style="margin-top: 0.75rem; text-align: center; font-weight: 600; font-size: ${baseFontSize * 0.9}px;"></p>
+                  
+                  <div style="margin-top: 1.5rem; border-top: 2px solid #eee; padding-top: 1rem;">
+                    <h5 style="color: ${headerColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.75rem;">
+                      Existing Admissions (${admissions.length})
+                    </h5>
+                    <div id="admissions-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto;"></div>
+                  </div>
+                </div>
+
+                <button id="admin-close-btn" style="width: 100%; background-color: rgba(255,255,255,0.2); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer; backdrop-filter: blur(10px);">
+                  Close Panel
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div style="margin-top: 2rem; padding: 2rem 1.5rem; background-color: ${cardColor}; border-radius: 12px; font-size: ${baseFontSize * 0.9}px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 2px solid ${headerColor};">
+            <!-- Share Section -->
+            <div style="text-align: center; margin-bottom: 1.5rem; padding: 0.75rem; background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+              <p style="font-size: ${baseFontSize * 1}px; font-weight: 700; margin: 0; color: white; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span style="font-size: ${baseFontSize * 1.3}px;">🙏</span>
+                <span>Please Share</span>
+                <span style="font-size: ${baseFontSize * 1.3}px;">🙏</span>
+              </p>
+            </div>
+            
+            <!-- Credits Section -->
+            <div style="text-align: center;">
+              <p style="font-size: ${baseFontSize * 0.75}px; margin-bottom: 0.5rem; color: ${textColor}; font-weight: 500;">Designed & Maintained by</p>
+              <div style="background: linear-gradient(135deg, ${headerColor} 0%, ${accentColor} 100%); display: inline-block; padding: 0.75rem 1.5rem; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                <p style="font-weight: 800; font-size: ${baseFontSize * 1.1}px; margin: 0 0 0.25rem 0; color: white;">webDrop Technologies</p>
+                <p style="font-weight: 600; font-size: ${baseFontSize * 0.9}px; margin: 0; color: white;">MD ARSHAD ALI</p>
+              </div>
+              <p style="font-size: ${baseFontSize * 0.7}px; color: ${textColor}; opacity: 0.7; margin: 0; font-weight: 500;">© 2025 All Rights Reserved</p>
+            </div>
+          </div>
+        </main>
+      `;
+
+      setupEventListeners();
+      updateSampleDataBanner();
+      updateAdminLists();
+    }
+
+    function setupEventListeners() {
+      const app = document.getElementById('app');
+      
+      // Copy UPI Button
+      const copyUpiBtn = app.querySelector('#copy-upi-btn');
+      if (copyUpiBtn) {
+        copyUpiBtn.addEventListener('click', copyUPIId);
+      }
+
+      // Donate Buttons
+      const donateButtons = app.querySelectorAll('.quick-donate-btn');
+      donateButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const amount = this.getAttribute('data-amount');
+          openUPIPay(amount);
+        });
+      });
+      
+      const adminTrigger = app.querySelector('#admin-trigger');
+      const adminPanel = app.querySelector('#admin-panel');
+      const adminLoginBtn = app.querySelector('#admin-login-btn');
+      const adminPasswordInput = app.querySelector('#admin-password');
+      const adminLogin = app.querySelector('#admin-login');
+      const adminContent = app.querySelector('#admin-content');
+      const adminError = app.querySelector('#admin-error');
+      const adminCloseBtn = app.querySelector('#admin-close-btn');
+
+      if (adminTrigger && adminPanel) {
+        adminTrigger.addEventListener('click', function() {
+          clickCount++;
+          
+          if (clickTimer) clearTimeout(clickTimer);
+          
+          if (clickCount === 3) {
+            adminPanel.style.display = 'block';
+            clickCount = 0;
+          }
+          
+          clickTimer = setTimeout(() => {
+            clickCount = 0;
+          }, 500);
+        });
+      }
+
+      if (adminLoginBtn && adminPasswordInput) {
+        const doLogin = () => {
+          const password = adminPasswordInput.value.trim();
+          const encKey = 'YWRtaW4xMjM=';
+          let isValid = false;
+          
+          try {
+            isValid = (btoa(password) === encKey);
+          } catch(e) {
+            isValid = false;
+          }
+          
+          if (isValid) {
+            adminLogin.style.display = 'none';
+            adminContent.style.display = 'block';
+            isAdminLoggedIn = true;
+            adminError.style.display = 'none';
+            adminPasswordInput.value = '';
+            switchAdminTab('jobs');
+            updateSampleDataBanner();
+          } else {
+            adminError.style.display = 'block';
+            setTimeout(() => {
+              adminError.style.display = 'none';
+            }, 2000);
+          }
+        };
+
+        adminLoginBtn.addEventListener('click', doLogin);
+        adminPasswordInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') doLogin();
+        });
+      }
+
+      if (adminCloseBtn && adminPanel) {
+        adminCloseBtn.addEventListener('click', () => {
+          adminPanel.style.display = 'none';
+          adminLogin.style.display = 'block';
+          adminContent.style.display = 'none';
+          adminPasswordInput.value = '';
+          isAdminLoggedIn = false;
+        });
+      }
+
+      const adminTabs = app.querySelectorAll('.admin-tab');
+      adminTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          switchAdminTab(tabName);
+        });
+      });
+
+      const jobForm = app.querySelector('#job-form');
+      if (jobForm) {
+        jobForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          if (!sdkReady || !window.dataSdk) {
+            showStatusMessage('job-status-msg', 'SDK not ready. Please refresh page.', 'error');
+            return;
+          }
+          
+          const submitBtn = jobForm.querySelector('button[type="submit"]');
+          const editId = submitBtn.getAttribute('data-edit-id');
+          
+          const title = app.querySelector('#job-title').value.trim();
+          const posts = app.querySelector('#job-posts').value.trim();
+          const status = app.querySelector('#job-status').value.trim();
+          const isNew = app.querySelector('#job-is-new').checked;
+          
+          if (editId) {
+            const item = allData.find(d => d.__backendId === editId);
+            if (item) {
+              showStatusMessage('job-status-msg', 'Updating job...', 'info');
+              
+              const result = await window.dataSdk.update({
+                ...item,
+                job_title: title,
+                job_posts: posts,
+                job_status: status,
+                job_is_new: isNew
+              });
+              
+              if (result.isOk) {
+                showStatusMessage('job-status-msg', 'Job updated successfully!', 'success');
+                jobForm.reset();
+                submitBtn.textContent = 'Add Job';
+                submitBtn.removeAttribute('data-edit-id');
+              } else {
+                showStatusMessage('job-status-msg', 'Failed to update job!', 'error');
+              }
+            }
+          } else {
+            if (allData.length >= 999) {
+              showStatusMessage('job-status-msg', 'Maximum limit of 999 items reached!', 'error');
+              return;
+            }
+            
+            showStatusMessage('job-status-msg', 'Adding job...', 'info');
+            submitBtn.disabled = true;
+            
+            const result = await window.dataSdk.create({
+              type: 'job',
+              job_title: title,
+              job_posts: posts,
+              job_status: status,
+              job_is_new: isNew,
+              created_at: Date.now()
+            });
+            
+            submitBtn.disabled = false;
+            
+            if (result.isOk) {
+              showStatusMessage('job-status-msg', 'Job added successfully!', 'success');
+              jobForm.reset();
+            } else {
+              showStatusMessage('job-status-msg', 'Failed to add job! Please try again.', 'error');
+            }
+          }
+        });
+      }
+
+      const resultForm = app.querySelector('#result-form');
+      if (resultForm) {
+        resultForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          if (!sdkReady || !window.dataSdk) {
+            showStatusMessage('result-status-msg', 'SDK not ready. Please refresh page.', 'error');
+            return;
+          }
+          
+          const submitBtn = resultForm.querySelector('button[type="submit"]');
+          const editId = submitBtn.getAttribute('data-edit-id');
+          
+          const title = app.querySelector('#result-title').value.trim();
+          const status = app.querySelector('#result-status').value.trim();
+          const isNew = app.querySelector('#result-is-new').checked;
+          
+          if (editId) {
+            const item = allData.find(d => d.__backendId === editId);
+            if (item) {
+              showStatusMessage('result-status-msg', 'Updating result...', 'info');
+              
+              const result = await window.dataSdk.update({
+                ...item,
+                result_title: title,
+                result_status: status,
+                result_is_new: isNew
+              });
+              
+              if (result.isOk) {
+                showStatusMessage('result-status-msg', 'Result updated successfully!', 'success');
+                resultForm.reset();
+                submitBtn.textContent = 'Add Result';
+                submitBtn.removeAttribute('data-edit-id');
+              } else {
+                showStatusMessage('result-status-msg', 'Failed to update result!', 'error');
+              }
+            }
+          } else {
+            if (allData.length >= 999) {
+              showStatusMessage('result-status-msg', 'Maximum limit of 999 items reached!', 'error');
+              return;
+            }
+            
+            showStatusMessage('result-status-msg', 'Adding result...', 'info');
+            submitBtn.disabled = true;
+            
+            const result = await window.dataSdk.create({
+              type: 'result',
+              result_title: title,
+              result_status: status,
+              result_is_new: isNew,
+              created_at: Date.now()
+            });
+            
+            submitBtn.disabled = false;
+            
+            if (result.isOk) {
+              showStatusMessage('result-status-msg', 'Result added successfully!', 'success');
+              resultForm.reset();
+            } else {
+              showStatusMessage('result-status-msg', 'Failed to add result!', 'error');
+            }
+          }
+        });
+      }
+
+      const admitForm = app.querySelector('#admit-form');
+      if (admitForm) {
+        admitForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          if (!sdkReady || !window.dataSdk) {
+            showStatusMessage('admit-status-msg', 'SDK not ready. Please refresh page.', 'error');
+            return;
+          }
+          
+          const submitBtn = admitForm.querySelector('button[type="submit"]');
+          const editId = submitBtn.getAttribute('data-edit-id');
+          
+          const title = app.querySelector('#admit-title').value.trim();
+          const status = app.querySelector('#admit-status').value.trim();
+          const isNew = app.querySelector('#admit-is-new').checked;
+          
+          if (editId) {
+            const item = allData.find(d => d.__backendId === editId);
+            if (item) {
+              showStatusMessage('admit-status-msg', 'Updating admit card...', 'info');
+              
+              const result = await window.dataSdk.update({
+                ...item,
+                admit_title: title,
+                admit_status: status,
+                admit_is_new: isNew
+              });
+              
+              if (result.isOk) {
+                showStatusMessage('admit-status-msg', 'Admit card updated successfully!', 'success');
+                admitForm.reset();
+                submitBtn.textContent = 'Add Admit Card';
+                submitBtn.removeAttribute('data-edit-id');
+              } else {
+                showStatusMessage('admit-status-msg', 'Failed to update admit card!', 'error');
+              }
+            }
+          } else {
+            if (allData.length >= 999) {
+              showStatusMessage('admit-status-msg', 'Maximum limit of 999 items reached!', 'error');
+              return;
+            }
+            
+            showStatusMessage('admit-status-msg', 'Adding admit card...', 'info');
+            submitBtn.disabled = true;
+            
+            const result = await window.dataSdk.create({
+              type: 'admit',
+              admit_title: title,
+              admit_status: status,
+              admit_is_new: isNew,
+              created_at: Date.now()
+            });
+            
+            submitBtn.disabled = false;
+            
+            if (result.isOk) {
+              showStatusMessage('admit-status-msg', 'Admit card added successfully!', 'success');
+              admitForm.reset();
+            } else {
+              showStatusMessage('admit-status-msg', 'Failed to add admit card!', 'error');
+            }
+          }
+        });
+      }
+
+      const admissionForm = app.querySelector('#admission-form');
+      if (admissionForm) {
+        admissionForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          if (!sdkReady || !window.dataSdk) {
+            showStatusMessage('admission-status-msg', 'SDK not ready. Please refresh page.', 'error');
+            return;
+          }
+          
+          const submitBtn = admissionForm.querySelector('button[type="submit"]');
+          const editId = submitBtn.getAttribute('data-edit-id');
+          
+          const title = app.querySelector('#admission-title').value.trim();
+          const status = app.querySelector('#admission-status').value.trim();
+          const isNew = app.querySelector('#admission-is-new').checked;
+          
+          if (editId) {
+            const item = allData.find(d => d.__backendId === editId);
+            if (item) {
+              showStatusMessage('admission-status-msg', 'Updating admission...', 'info');
+              
+              const result = await window.dataSdk.update({
+                ...item,
+                admission_title: title,
+                admission_status: status,
+                admission_is_new: isNew
+              });
+              
+              if (result.isOk) {
+                showStatusMessage('admission-status-msg', 'Admission updated successfully!', 'success');
+                admissionForm.reset();
+                submitBtn.textContent = 'Add Admission';
+                submitBtn.removeAttribute('data-edit-id');
+              } else {
+                showStatusMessage('admission-status-msg', 'Failed to update admission!', 'error');
+              }
+            }
+          } else {
+            if (allData.length >= 999) {
+              showStatusMessage('admission-status-msg', 'Maximum limit of 999 items reached!', 'error');
+              return;
+            }
+            
+            showStatusMessage('admission-status-msg', 'Adding admission...', 'info');
+            submitBtn.disabled = true;
+            
+            const result = await window.dataSdk.create({
+              type: 'admission',
+              admission_title: title,
+              admission_status: status,
+              admission_is_new: isNew,
+              created_at: Date.now()
+            });
+            
+            submitBtn.disabled = false;
+            
+            if (result.isOk) {
+              showStatusMessage('admission-status-msg', 'Admission added successfully!', 'success');
+              admissionForm.reset();
+            } else {
+              showStatusMessage('admission-status-msg', 'Failed to add admission!', 'error');
+            }
+          }
+        });
+      }
+
+      const navLinks = app.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const page = this.getAttribute('data-page');
+          if (page) {
+            navigateTo(page);
+          }
+        });
+      });
+
+      const cards = app.querySelectorAll('.service-card, .quick-link-item');
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+          this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = '';
+        });
+      });
+
+      const buttons = app.querySelectorAll('a[href^="https://wa.me"], a[href^="tel:"]');
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+        });
+        button.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+
+      updatePageContent();
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.header_color || defaultConfig.header_color,
+            set: (value) => {
+              config.header_color = value;
+              window.elementSdk.setConfig({ header_color: value });
+            }
+          },
+          {
+            get: () => config.card_color || defaultConfig.card_color,
+            set: (value) => {
+              config.card_color = value;
+              window.elementSdk.setConfig({ card_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["shop_name", config.shop_name || defaultConfig.shop_name],
+        ["csc_id", config.csc_id || defaultConfig.csc_id],
+        ["owner_name", config.owner_name || defaultConfig.owner_name],
+        ["tagline", config.tagline || defaultConfig.tagline],
+        ["phone_1", config.phone_1 || defaultConfig.phone_1],
+        ["phone_2", config.phone_2 || defaultConfig.phone_2],
+        ["whatsapp", config.whatsapp || defaultConfig.whatsapp],
+        ["location", config.location || defaultConfig.location],
+        ["whatsapp_group", config.whatsapp_group || defaultConfig.whatsapp_group],
+        ["whatsapp_channel", config.whatsapp_channel || defaultConfig.whatsapp_channel]
+      ]);
+    }
+
+    async function init() {
+      await initDataSDK();
+      
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      } else {
+        renderContent(defaultConfig);
+      }
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b1fbde655e9594e',t:'MTc2NjQwNzc5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
