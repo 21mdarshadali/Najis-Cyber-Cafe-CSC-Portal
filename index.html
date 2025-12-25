@@ -1,51 +1,63 @@
 <!doctype html>
 <html lang="hi">
- <head>
+
+<head>
+  <!-- ===== Basic Meta Information ===== -->
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bihar CSC Portal</title>
+  <title>India CSC Portal</title>
+  <link rel="icon" href="data:,">
+
+  <!-- ===== Google Fonts: Poppins ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ===== Global CSS Reset & Base Styles ===== -->
   <style>
-    body {
-      box-sizing: border-box;
-    }
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    html, body {
-      height: 100%;
+
+    html,
+    body {
       width: 100%;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
     }
-    .nav-link {
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .service-card, .quick-link-item {
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+
+    .nav-link,
+    .service-card,
+    .quick-link-item,
     .admin-tab {
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     .admin-tab.active {
-      background-color: rgba(255,255,255,0.3) !important;
-      border-bottom: 3px solid white !important;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-bottom: 3px solid white;
     }
+
     .admin-tab-content {
       animation: fadeIn 0.3s ease;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .item-row {
       display: flex;
       justify-content: space-between;
@@ -55,9 +67,11 @@
       border-radius: 4px;
       font-size: 0.85rem;
     }
+
     .item-row:hover {
       background-color: #f0f0f0;
     }
+
     .delete-btn {
       background-color: #ff4444;
       color: white;
@@ -67,19 +81,24 @@
       cursor: pointer;
       font-size: 0.75rem;
     }
+
     .delete-btn:hover {
       background-color: #cc0000;
     }
+
     .edit-btn:hover {
       background-color: #1e40af;
     }
+
     .important-service-card {
       transition: all 0.3s ease;
     }
+
     .important-service-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
+
     .sample-data-banner {
       background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       color: white;
@@ -88,13 +107,22 @@
       margin-bottom: 1rem;
       text-align: center;
       font-weight: 700;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       animation: slideDown 0.5s ease;
     }
+
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .add-sample-btn {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
@@ -104,20 +132,19 @@
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: all 0.3s ease;
       width: 100%;
-      margin-bottom: 1rem;
+      transition: all 0.3s ease;
     }
+
     .add-sample-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
     }
+
     .add-sample-btn:disabled {
       background: #9ca3af;
       cursor: not-allowed;
-      transform: none;
     }
+
     .wa-logo {
       width: 38px;
       height: 38px;
@@ -126,20 +153,164 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       font-size: 24px;
     }
+
     .donate-btn:hover {
       transform: scale(1.05);
     }
+
+    .donate-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .donate-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .donate-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .donate-buttons button {
+      border-radius: 999px;
+      padding: 8px 0;
+      font-size: 14px;
+      font-weight: 700;
+      background: #f3f4f6;
+      color: #111827;
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .donate-buttons button:hover {
+      background: #e5e7eb;
+    }
+
+    .custom-donate {
+      display: flex;
+      gap: 8px;
+    }
+
+    .custom-donate input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .custom-donate button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 700;
+    }
+
+    #dynamic-qr {
+      margin-top: 1rem;
+      text-align: center;
+      animation: fadeInQR 0.4s ease;
+    }
+
+    @keyframes fadeInQR {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quick-donate-btn.active {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #ffffff;
+      border-color: #047857;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+
+    #custom-pay-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 10px 20px;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    #custom-pay-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (max-width: 480px) {
+      .donate-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+      .admin-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-edit {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    border: none;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .btn-delete {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    border: none;
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
+
+  <!-- ===== View Transition (Optional) ===== -->
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+  </style>
+
+  <!-- ===== Tailwind CSS (Dev Mode) ===== -->
+  <!-- ⚠️ For development only. Remove in production -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
   <div id="app" style="width: 100%; height: 100%; overflow: auto;"></div>
+
   <script>
+    /* // ===== Global Configuration ===== */
     const defaultConfig = {
       shop_name: "NAJIS CYBER CAFE",
       csc_id: "CSC12345678",
@@ -160,728 +331,1235 @@
       font_size: 16
     };
 
-    let allData = [];
-    let currentPage = 'home';
-    let clickCount = 0;
-    let clickTimer = null;
-    let isAdminLoggedIn = false;
-    let isSampleDataAdded = false;
-    let sdkReady = false;
-
-    const dataHandler = {
-      onDataChanged(data) {
-        allData = data;
-        updatePageContent();
-        updateCounts();
-        if (isAdminLoggedIn) {
-          updateAdminLists();
-        }
-        updateSampleDataBanner();
-      }
+    /* // ===== Global Variables ===== */
+    let allData = []; // Stores all dynamic data (jobs, results, admits, etc.)
+    let donationConfig = {
+      upiId: "9709701986@ybl",
+      payeeName: "NAJIS CYBER CAFE"
     };
 
-    let itemCounter = 0;
+    let currentPage = 'home';         // Tracks current page
+    let clickCount = 0;               // For admin login trigger
+    let clickTimer = null;            // Timer for click tracking
+    let isAdminLoggedIn = false;      // Admin login status
+    let isSampleDataAdded = false;    // Sample data flag
+    let searchText = "";              // Search input text
+    let itemCounter = 0;              // Counter for items rendered
 
-    async function initDataSDK() {
-      if (window.dataSdk && !sdkReady) {
-        const result = await window.dataSdk.init(dataHandler);
-        if (result.isOk) {
-          sdkReady = true;
-        }
-      }
+    /* // ===== Smart Search Matching ===== */
+    function smartMatch(text, query) {
+      if (!query) return true;
+
+      text = text.toLowerCase();
+      query = query.toLowerCase().trim();
+
+      // Normalize spaces
+      query = query.replace(/\s+/g, " ");
+
+      // Split query into words
+      const qWords = query.split(" ");
+
+      // Return true if any word matches the text
+      return qWords.some(word => text.includes(word));
     }
 
+    /* // ===== Page Navigation ===== */
     function navigateTo(page) {
       currentPage = page;
+
+      // Reset search input on tab change
+      searchText = "";
+      const input = document.getElementById("page-search-input");
+      if (input) input.value = "";
+
       updatePageContent();
     }
 
+    /* // ===== UpdateCounts Function ===== */
     function updateCounts() {
       const app = document.getElementById('app');
       if (!app) return;
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
+      // Use dynamic config if available, else fallback to default
+      const config = window.elementSdk?.config || defaultConfig;
+      const accentColor = config.accent_color;
+      const baseFontSize = config.font_size;
 
+      // Filter data by type
       const jobs = allData.filter(item => item.type === 'job');
       const results = allData.filter(item => item.type === 'result');
       const admits = allData.filter(item => item.type === 'admit');
       const admissions = allData.filter(item => item.type === 'admission');
 
-      const jobsCountCard = app.querySelector('#jobs-count-card');
-      const resultsCountCard = app.querySelector('#results-count-card');
-      const admitsCountCard = app.querySelector('#admits-count-card');
-      const admissionsCountCard = app.querySelector('#admissions-count-card');
+      // Update count cards
+      const updateCard = (selector, label, count) => {
+        const card = app.querySelector(selector);
+        if (card) {
+          card.textContent = `${count} ${label}`;
+          card.style.color = accentColor;
+          card.style.fontSize = `${baseFontSize * 1.1}px`;
+        }
+      };
 
-      if (jobsCountCard) {
-        jobsCountCard.textContent = `${jobs.length} Jobs Available`;
-        jobsCountCard.style.color = accentColor;
-        jobsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
-      }
-      if (resultsCountCard) {
-        resultsCountCard.textContent = `${results.length} Results`;
-        resultsCountCard.style.color = accentColor;
-        resultsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
-      }
-      if (admitsCountCard) {
-        admitsCountCard.textContent = `${admits.length} Admit Cards`;
-        admitsCountCard.style.color = accentColor;
-        admitsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
-      }
-      if (admissionsCountCard) {
-        admissionsCountCard.textContent = `${admissions.length} Admissions`;
-        admissionsCountCard.style.color = accentColor;
-        admissionsCountCard.style.fontSize = `${baseFontSize * 1.1}px`;
-      }
+      updateCard('#jobs-count-card', 'Jobs Available', jobs.length);
+      updateCard('#results-count-card', 'Results', results.length);
+      updateCard('#admits-count-card', 'Admit Cards', admits.length);
+      updateCard('#admissions-count-card', 'Admissions', admissions.length);
 
-      const navJobs = app.querySelector('.nav-link[data-page="jobs"]');
-      const navResults = app.querySelector('.nav-link[data-page="results"]');
-      const navAdmits = app.querySelector('.nav-link[data-page="admits"]');
-      const navAdmissions = app.querySelector('.nav-link[data-page="admissions"]');
+      // Update navigation tab labels
+      const updateNav = (selector, icon, label, count) => {
+        const nav = app.querySelector(selector);
+        if (nav) nav.textContent = `${icon} ${label} (${count})`;
+      };
 
-      if (navJobs) navJobs.textContent = `💼 Jobs (${jobs.length})`;
-      if (navResults) navResults.textContent = `📊 Results (${results.length})`;
-      if (navAdmits) navAdmits.textContent = `🎫 Admit Cards (${admits.length})`;
-      if (navAdmissions) navAdmissions.textContent = `🎓 Admissions (${admissions.length})`;
+      updateNav('.nav-link[data-page="jobs"]', '💼', 'Jobs', jobs.length);
+      updateNav('.nav-link[data-page="results"]', '📊', 'Results', results.length);
+      updateNav('.nav-link[data-page="admits"]', '🎫', 'Admit Cards', admits.length);
+      updateNav('.nav-link[data-page="admissions"]', '🎓', 'Admissions', admissions.length);
     }
 
+    /* // ===== updatePageContent Function ===== */
     function updatePageContent() {
       const app = document.getElementById('app');
       if (!app) return;
 
-      const navLinks = app.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
+      // Highlight active nav tab
+      app.querySelectorAll('.nav-link').forEach(link => {
         const linkPage = link.getAttribute('data-page');
-        if (linkPage === currentPage) {
-          link.style.fontWeight = '700';
-          link.style.borderBottom = '3px solid white';
-        } else {
-          link.style.fontWeight = '600';
-          link.style.borderBottom = 'none';
-        }
+        const isActive = linkPage === currentPage;
+        link.style.fontWeight = isActive ? '700' : '600';
+        link.style.borderBottom = isActive ? '3px solid white' : 'none';
       });
 
-      const homeContent = app.querySelector('#home-content');
-      const jobsContent = app.querySelector('#jobs-content');
-      const resultsContent = app.querySelector('#results-content');
-      const admitsContent = app.querySelector('#admits-content');
-      const admissionsContent = app.querySelector('#admissions-content');
+      // Page sections mapped by ID
+      const sections = {
+        home: '#home-content',
+        jobs: '#jobs-content',
+        results: '#results-content',
+        admits: '#admits-content',
+        admissions: '#admissions-content'
+      };
 
-      if (homeContent) {
-        homeContent.style.display = currentPage === 'home' ? 'block' : 'none';
-        if (currentPage === 'home') {
-          updateHomePreviews();
-        }
+      // Show/hide sections
+      Object.entries(sections).forEach(([page, selector]) => {
+        const section = app.querySelector(selector);
+        if (section) section.style.display = currentPage === page ? 'block' : 'none';
+      });
+
+      // Trigger render functions
+      switch (currentPage) {
+        case 'jobs': renderJobsList(); break;
+        case 'results': renderResultsList(); break;
+        case 'admits': renderAdmitsList(); break;
+        case 'admissions': renderAdmissionsList(); break;
+        case 'home':
+          initHomeCounts();
+          initNavCounts();
+          initHomeLatestPreviews();
+          break;
       }
-      if (jobsContent) jobsContent.style.display = currentPage === 'jobs' ? 'block' : 'none';
-      if (resultsContent) resultsContent.style.display = currentPage === 'results' ? 'block' : 'none';
-      if (admitsContent) admitsContent.style.display = currentPage === 'admits' ? 'block' : 'none';
-      if (admissionsContent) admissionsContent.style.display = currentPage === 'admissions' ? 'block' : 'none';
 
-      if (currentPage === 'jobs' && jobsContent) {
-        renderJobsList();
-      } else if (currentPage === 'results' && resultsContent) {
-        renderResultsList();
-      } else if (currentPage === 'admits' && admitsContent) {
-        renderAdmitsList();
-      } else if (currentPage === 'admissions' && admissionsContent) {
-        renderAdmissionsList();
+      // Show/hide search box
+      const searchBox = document.getElementById("page-search-box");
+      const searchInput = document.getElementById("page-search-input");
+      const searchablePages = ["jobs", "results", "admits", "admissions"];
+
+      if (searchBox) {
+        if (searchablePages.includes(currentPage)) {
+          searchBox.style.display = "flex";
+        } else {
+          searchBox.style.display = "none";
+          searchText = "";
+          if (searchInput) searchInput.value = "";
+        }
       }
     }
 
-    function updateHomePreviews() {
-      const app = document.getElementById('app');
-      if (!app) return;
+    /* // ===== fetchJobsFromFirestore Function ===== */
+    async function fetchJobsFromFirestore() {
+      // Fetch documents from 'jobs' collection ordered by creation date (newest first)
+      const snapshot = await window.firebaseFirestore
+        .collection("jobs")
+        .orderBy("created_at", "desc")
+        .get();
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
-      const cardColor = config.card_color || defaultConfig.card_color;
+      // Format each document with its ID and data
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    }
 
-      const jobs = allData.filter(item => item.type === 'job').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
-      const results = allData.filter(item => item.type === 'result').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
-      const admits = allData.filter(item => item.type === 'admit').sort((a, b) => (b.created_at || 0) - (a.created_at || 0)).slice(0, 10);
+    /* // ===== initHomeCounts Function ===== */
+    function initHomeCounts() {
+      // Wait until Firebase is ready
+      if (!window.fb) {
+        setTimeout(initHomeCounts, 300);
+        return;
+      }
 
-      const jobsPreview = app.querySelector('#latest-jobs-preview');
-      const resultsPreview = app.querySelector('#latest-results-preview');
-      const admitsPreview = app.querySelector('#latest-admits-preview');
+      // Get homepage count cards
+      const jobsCard = document.getElementById('jobs-count-card');
+      const resultsCard = document.getElementById('results-count-card');
+      const admitsCard = document.getElementById('admits-count-card');
+      const admissionsCard = document.getElementById('admissions-count-card');
 
-      if (jobsPreview) {
+      // Listen for live job updates
+      window.fb.listen("jobs", jobs => {
+        if (jobsCard) jobsCard.textContent = `${jobs.length} Jobs Available`;
+      });
+
+      // Listen for live result updates
+      window.fb.listen("results", results => {
+        if (resultsCard) resultsCard.textContent = `${results.length} Results`;
+      });
+
+      // Listen for live admit card updates
+      window.fb.listen("admits", admits => {
+        if (admitsCard) admitsCard.textContent = `${admits.length} Admit Cards`;
+      });
+
+      // Listen for live admission updates
+      window.fb.listen("admissions", admissions => {
+        if (admissionsCard) admissionsCard.textContent = `${admissions.length} Admissions`;
+      });
+    }
+
+    /* // ===== initNavCounts Function ===== */
+    function initNavCounts() {
+      // Wait until Firebase is ready
+      if (!window.fb) {
+        setTimeout(initNavCounts, 300);
+        return;
+      }
+
+      // Get navigation tab elements
+      const navJobs = document.querySelector('.nav-link[data-page="jobs"]');
+      const navResults = document.querySelector('.nav-link[data-page="results"]');
+      const navAdmits = document.querySelector('.nav-link[data-page="admits"]');
+      const navAdmissions = document.querySelector('.nav-link[data-page="admissions"]');
+
+      // Listen for live job updates
+      window.fb.listen("jobs", jobs => {
+        if (navJobs) navJobs.textContent = `💼 Jobs (${jobs.length})`;
+      });
+
+      // Listen for live result updates
+      window.fb.listen("results", results => {
+        if (navResults) navResults.textContent = `📊 Results (${results.length})`;
+      });
+
+      // Listen for live admit card updates
+      window.fb.listen("admits", admits => {
+        if (navAdmits) navAdmits.textContent = `🎫 Admit Cards (${admits.length})`;
+      });
+
+      // Listen for live admission updates
+      window.fb.listen("admissions", admissions => {
+        if (navAdmissions) navAdmissions.textContent = `🎓 Admissions (${admissions.length})`;
+      });
+    }
+
+    /* // ===== initHomeLatestPreviews Function ===== */
+    function initHomeLatestPreviews() {
+      // Wait until Firebase is ready
+      if (!window.fb) {
+        setTimeout(initHomeLatestPreviews, 300);
+        return;
+      }
+
+      // Get preview containers
+      const jobsBox = document.getElementById("latest-jobs-preview");
+      const resultsBox = document.getElementById("latest-results-preview");
+      const admitsBox = document.getElementById("latest-admits-preview");
+
+      // Helper function to render latest items
+      const renderLatest = (items, box, emptyMsg) => {
+        if (!box) return;
+
+        const latest = items
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+          .slice(0, 5);
+
+        box.innerHTML = latest.length === 0
+          ? `<p>${emptyMsg}</p>`
+          : latest.map(item => `
+        <div style="margin-bottom:8px">
+          <strong>
+            ${item.title}
+            ${item.isNew ? '<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>' : ''}
+          </strong><br>
+          <small>${item.status}</small>
+        </div>
+      `).join("");
+      };
+
+      // Listen for latest jobs
+      window.fb.listen("jobs", jobs => renderLatest(jobs, jobsBox, "No jobs yet"));
+
+      // Listen for latest results
+      window.fb.listen("results", results => renderLatest(results, resultsBox, "No results yet"));
+
+      // Listen for latest admit cards
+      window.fb.listen("admits", admits => renderLatest(admits, admitsBox, "No admit cards yet"));
+    }
+
+
+
+
+ 
+    /* // ===== editJob Function ===== */
+    window.editJob = function (id, title, posts, status, isNew) {
+      const form = document.querySelector('#job-form');
+      if (!form) return;
+
+      // Fill form fields with job details
+      document.querySelector('#job-title').value = title;
+      document.querySelector('#job-posts').value = posts;
+      document.querySelector('#job-status').value = status;
+      document.querySelector('#job-is-new').checked = Boolean(isNew);
+
+      // Mark form with edit mode (store job ID)
+      form.setAttribute("data-edit-id", id);
+
+      // Update submit button text
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.textContent = "Update Job";
+
+      // Show status message
+      showStatusMessage('job-status-msg', 'Edit mode enabled', 'info');
+    };
+
+    /* // ===== editResult Function ===== */
+    window.editResult = function (id, title, status, isNew) {
+      const form = document.querySelector('#result-form');
+      if (!form) return;
+
+      // Fill form fields with result details
+      document.querySelector('#result-title').value = title;
+      document.querySelector('#result-status').value = status;
+      document.querySelector('#result-is-new').checked = Boolean(isNew);
+
+      // Mark form with edit mode (store result ID)
+      form.setAttribute('data-edit-id', id);
+
+      // Update submit button text
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.textContent = "Update Result";
+
+      // Show status message
+      showStatusMessage('result-status-msg', 'Edit mode enabled', 'info');
+    };
+
+    /* // ===== editAdmit Function ===== */
+    window.editAdmit = function (id, title, status, isNew) {
+      const form = document.querySelector('#admit-form');
+      if (!form) return;
+
+      // Fill form fields with admit card details
+      document.querySelector('#admit-title').value = title;
+      document.querySelector('#admit-status').value = status;
+      document.querySelector('#admit-is-new').checked = Boolean(isNew);
+
+      // Mark form with edit mode (store admit card ID)
+      form.setAttribute('data-edit-id', id);
+
+      // Update submit button text
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.textContent = "Update Admit Card";
+
+      // Show status message
+      showStatusMessage('admit-status-msg', 'Edit mode enabled', 'info');
+    };
+
+    let editingNoticeId = null;
+    function editNotice(id, title, isNew) {
+  editingNoticeId = id;
+
+  document.getElementById("notice-title").value = title;
+  document.getElementById("notice-is-new").checked = isNew;
+
+  document.querySelector("#notice-form button").innerText = "Update Notice";
+}
+
+    /* // ===== editAdmission Function ===== */
+    window.editAdmission = function (id, title, status, isNew) {
+      const form = document.querySelector('#admission-form');
+      if (!form) return;
+
+      // Fill form fields with admission details
+      document.querySelector('#admission-title').value = title;
+      document.querySelector('#admission-status').value = status;
+      document.querySelector('#admission-is-new').checked = Boolean(isNew);
+
+      // Mark form with edit mode (store admission ID)
+      form.setAttribute('data-edit-id', id);
+
+      // Update submit button text
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.textContent = "Update Admission";
+
+      // Show status message
+      showStatusMessage('admission-status-msg', 'Edit mode enabled', 'info');
+    };
+
+
+
+
+    /* // ===== deleteItem Function ===== */
+    window.deleteItem = async function (collection, id) {
+      // Confirm before deleting
+      const confirmed = confirm("Delete this item?");
+      if (!confirmed) return;
+
+      try {
+        // Log action for debugging
+        console.log("Deleting:", collection, id);
+
+        // Remove item from Firebase
+        await window.fb.remove(collection, id);
+
+        // Success message
+        alert("Deleted successfully");
+      } catch (err) {
+        // Log error and show failure message
+        console.error("Delete error:", err);
+        alert("Delete failed");
+      }
+    };
+
+     /* // ===== deleteItem Function ===== */
+    window.deleteItem = async function (collection, id) {
+      // Confirm before deleting
+      const confirmed = confirm("Are you sure you want to delete?");
+      if (!confirmed) return;
+
+      try {
+        // Remove item from Firebase
+        await window.fb.remove(collection, id);
+        alert("Deleted successfully");
+      } catch (err) {
+        // Log error and show failure message
+        console.error("Delete error:", err);
+        alert("Delete failed");
+      }
+    };
+
+
+
+
+    /* // ===== loadAdminJobs Function ===== */
+    function loadAdminJobs() {
+      window.fb.listen("jobs", jobs => {
+        // Sort jobs by latest createdAt
+        jobs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const jobsList = document.getElementById("jobs-list");
+        const jobsCount = document.querySelector("#admin-tab-jobs h5");
+        if (!jobsList) return;
+
+        // Handle empty state
         if (jobs.length === 0) {
-          jobsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
-        } else {
-          jobsPreview.innerHTML = jobs.map(job => `
-            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
-              ${job.job_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
-              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${job.job_title}</h4>
-              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px; margin-bottom: 0.25rem;">Total Post: ${job.job_posts}</p>
-              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${job.job_status}</p>
-            </div>
-          `).join('');
+          jobsList.innerHTML = "<p>No jobs added yet</p>";
+          if (jobsCount) jobsCount.textContent = "Existing Jobs (0)";
+          return;
         }
-      }
 
-      if (resultsPreview) {
-        if (results.length === 0) {
-          resultsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
-        } else {
-          resultsPreview.innerHTML = results.map(result => `
-            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
-              ${result.result_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
-              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${result.result_title}</h4>
-              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${result.result_status}</p>
-            </div>
-          `).join('');
-        }
-      }
+        // Update count
+        if (jobsCount) jobsCount.textContent = `Existing Jobs (${jobs.length})`;
 
-      if (admitsPreview) {
-        if (admits.length === 0) {
-          admitsPreview.innerHTML = `<p style="color: #999; font-size: ${baseFontSize * 0.9}px; font-style: italic;">जल्द ही आएंगे</p>`;
-        } else {
-          admitsPreview.innerHTML = admits.map(admit => `
-            <div style="position: relative; padding: 1rem; background-color: ${cardColor}; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 0.75rem; border-left: 4px solid ${accentColor};">
-              ${admit.admit_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: ${baseFontSize * 0.65}px; font-weight: 700;">NEW</span>` : ''}
-              <h4 style="color: ${textColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admit.admit_title}</h4>
-              <p style="color: ${textColor}; font-size: ${baseFontSize * 0.8}px;">${admit.admit_status}</p>
-            </div>
-          `).join('');
-        }
-      }
+        // Render job items
+        jobsList.innerHTML = jobs.map(job => `
+      <div class="item-row">
+        <span style="flex:1">
+          ${job.title}
+          ${job.isNew ? '<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>' : ''}
+        </span>
+   <div class="admin-actions">
+  <button class="btn-edit"
+    onclick="editJob(
+      '${job.id}',
+      '${job.title.replace(/'/g,"\\'")}',
+      '${job.posts}',
+      '${job.status}',
+      ${job.isNew}
+    )">
+    ✏️ Edit
+  </button>
+
+  <button class="btn-delete"
+    onclick="deleteItem('jobs','${job.id}')">
+    🗑 Delete
+  </button>
+</div>
+  </div>
+    `).join('');
+      });
     }
 
+    /* // ===== loadAdminResults Function ===== */
+    function loadAdminResults() {
+      window.fb.listen("results", items => {
+        // Sort results by latest createdAt
+        items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const list = document.getElementById("results-list");
+        const count = document.querySelector("#admin-tab-results h5");
+        if (!list) return;
+
+        // Handle empty state
+        if (items.length === 0) {
+          list.innerHTML = "<p>No results added yet</p>";
+          if (count) count.textContent = "Existing Results (0)";
+          return;
+        }
+
+        // Update count
+        if (count) count.textContent = `Existing Results (${items.length})`;
+
+        // Render result items
+        list.innerHTML = items.map(i => `
+      <div class="item-row">
+        <span style="flex:1">
+          ${i.title}
+          ${i.isNew ? '<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>' : ''}
+        </span>
+     <div class="admin-actions">
+  <button class="btn-edit"
+    onclick="editResult(
+      '${i.id}',
+      '${i.title.replace(/'/g,"\\'")}',
+      '${i.status}',
+      ${i.isNew}
+    )">
+    ✏️ Edit
+  </button>
+
+  <button class="btn-delete"
+    onclick="deleteItem('results','${i.id}')">
+    🗑 Delete
+  </button>
+</div>
+   </div>
+    `).join("");
+      });
+    }
+
+    /* // ===== loadAdminAdmits Function ===== */
+    function loadAdminAdmits() {
+      window.fb.listen("admits", items => {
+        // Sort admit cards by latest createdAt
+        items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const list = document.getElementById("admits-list");
+        const count = document.querySelector("#admin-tab-admits h5");
+        if (!list) return;
+
+        // Handle empty state
+        if (items.length === 0) {
+          list.innerHTML = "<p>No admit cards added yet</p>";
+          if (count) count.textContent = "Existing Admit Cards (0)";
+          return;
+        }
+
+        // Update count
+        if (count) count.textContent = `Existing Admit Cards (${items.length})`;
+
+        // Render admit card items
+        list.innerHTML = items.map(i => `
+      <div class="item-row">
+        <span style="flex:1">
+          ${i.title}
+          ${i.isNew ? '<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>' : ''}
+        </span>
+        <button onclick="editAdmit(
+  <div class="admin-actions">
+  <button class="btn-edit"
+    onclick="editAdmit(
+      '${i.id}',
+      '${i.title.replace(/'/g,"\\'")}',
+      '${i.status}',
+      ${i.isNew}
+    )">
+    ✏️ Edit
+  </button>
+
+  <button class="btn-delete"
+    onclick="deleteItem('admits','${i.id}')">
+    🗑 Delete
+  </button>
+</div>
+    </div>
+    `).join("");
+      });
+        }
+
+    /* // ===== loadAdminAdmissions Function ===== */
+    function loadAdminAdmissions() {
+          window.fb.listen("admissions", items => {
+            // Sort admissions by latest createdAt
+            items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            const list = document.getElementById("admissions-list");
+            const count = document.querySelector("#admin-tab-admissions h5");
+            if (!list) return;
+
+            // Handle empty state
+            if (items.length === 0) {
+              list.innerHTML = "<p>No admissions added yet</p>";
+              if (count) count.textContent = "Existing Admissions (0)";
+              return;
+            }
+
+            // Update count
+            if (count) count.textContent = `Existing Admissions (${items.length})`;
+
+            // Render admission items
+            list.innerHTML = items.map(i => `
+      <div class="item-row">
+        <span style="flex:1">
+          ${i.title}
+          ${i.isNew ? '<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>' : ''}
+        </span>
+<div class="admin-actions">
+  <button class="btn-edit"
+    onclick="editAdmission(
+      '${i.id}',
+      '${i.title.replace(/'/g, "\\'")}',
+      '${i.status}',
+      ${i.isNew}
+    )">
+    ✏️ Edit
+  </button>
+
+  <button class="btn-delete"
+    onclick="deleteItem('admissions','${i.id}')">
+    🗑 Delete
+  </button>
+</div>
+    </div>
+    `).join("");
+          });
+        }
+
+    /* // ===== loadAdminNotices Function ===== */
+    function loadAdminNotices() {
+          window.fb.listen("notices", notices => {
+            const box = document.getElementById("notices-list");
+            if (!box) return;
+
+            box.innerHTML = notices.map(n => `
+  <div class="item-row" style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  ">
+    
+    <!-- LEFT : NOTICE TEXT -->
+    <div style="flex:1; font-size:14px; font-weight:600;">
+      ${n.title}
+      ${n.isNew ? '<span style="color:#ef4444;font-size:11px;margin-left:6px;font-weight:700;">NEW</span>' : ''}
+    </div>
+
+    <!-- RIGHT : ACTION BUTTONS -->
+    <div style="display:flex; gap:6px;">
+      
+      <button
+        onclick="editNotice('${n.id}','${n.title.replace(/'/g, "\\'")}',${n.isNew})"
+        style="
+          padding:4px 10px;
+          font-size:12px;
+          border-radius:999px;
+          border:none;
+          background:#e0f2fe;
+          color:#0369a1;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        ✏️ Edit
+      </button>
+
+      <button
+        onclick="deleteItem('notices','${n.id}')"
+        style="
+          padding:4px 10px;
+          font-size:12px;
+          border-radius:999px;
+          border:none;
+          background:#fee2e2;
+          color:#991b1b;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        🗑 Delete
+      </button>
+
+    </div>
+  </div>
+`).join("");
+
+
+          });
+        }
+
+    /* // ===== loadDonationSettings Function ===== */
+    function loadDonationSettings() {
+      // Retry until Firebase is ready
+      if (!window.fb) {
+        setTimeout(loadDonationSettings, 300);
+        return;
+      }
+
+      // Listen for settings updates
+      window.fb.listen("settings", async (items) => {
+        const donation = items.find(i => i.id === "donation");
+
+        // ✅ If donation settings missing, create default entry
+        if (!donation) {
+          await window.fb.update("settings", "donation", {
+            upiId: donationConfig.upiId || "",
+            payeeName: donationConfig.payeeName || "",
+            createdAt: Date.now()
+          });
+          return;
+        }
+
+        // Update local config
+        donationConfig.upiId = donation.upiId;
+        donationConfig.payeeName = donation.payeeName;
+
+        // Update UI elements safely
+        const currentUpi = document.getElementById("current-upi");
+        if (currentUpi) currentUpi.textContent = donation.upiId;
+
+        const currentPayee = document.getElementById("current-payee");
+        if (currentPayee) currentPayee.textContent = donation.payeeName;
+
+        const upiText = document.getElementById("upi-id-text");
+        if (upiText) upiText.textContent = donation.upiId;
+      });
+    }
+
+
+
+
+    /* // ===== renderJobsList Function ===== */
     function renderJobsList() {
-      const jobsListContainer = document.getElementById('jobs-list-container');
-      if (!jobsListContainer) return;
+      const box = document.getElementById("jobs-list-container");
+      if (!box) return;
 
-      const jobs = allData.filter(item => item.type === 'job').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
-      
-      if (jobs.length === 0) {
-        jobsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No jobs available</p>';
-        return;
-      }
+      // Show loading state
+      box.innerHTML = "Loading jobs...";
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const cardColor = config.card_color || defaultConfig.card_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
+      // Listen for jobs data from Firebase
+      window.fb.listen("jobs", jobs => {
+        // Filter jobs based on search text
+        jobs = jobs.filter(job =>
+          smartMatch(job.title + " " + job.status, searchText)
+        );
 
-      jobsListContainer.innerHTML = jobs.map(job => `
-        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
-          ${job.job_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
-          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${job.job_title}</h3>
-          <p style="color: ${textColor}; font-size: ${baseFontSize * 0.9}px; margin-bottom: 0.25rem;"><strong>Posts:</strong> ${job.job_posts}</p>
-          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${job.job_status}</p>
+        // Sort jobs by latest createdAt
+        jobs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        // Handle empty state
+        if (jobs.length === 0) {
+          box.innerHTML = "No jobs available";
+          return;
+        }
+
+        // Clear container before rendering
+        box.innerHTML = "";
+
+        // Render job cards
+        jobs.forEach(job => {
+          box.innerHTML += `
+        <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)">
+          <h3 style="font-weight:700">
+            ${job.title.replace(/'/g, "\\'")}
+            ${job.isNew ? '<span style="color:red;font-size:12px;margin-left:6px;">NEW</span>' : ''}
+          </h3>
+          <p><b>Posts:</b> ${job.posts}</p>
+          <p><b>Status:</b> ${job.status}</p>
         </div>
-      `).join('');
+      `;
+        });
+      });
     }
 
+    /* // ===== renderResultsList Function ===== */
     function renderResultsList() {
-      const resultsListContainer = document.getElementById('results-list-container');
-      if (!resultsListContainer) return;
+      const box = document.getElementById("results-list-container");
+      if (!box) return;
 
-      const results = allData.filter(item => item.type === 'result').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
-      
-      if (results.length === 0) {
-        resultsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No results available</p>';
-        return;
-      }
+      // Show loading state
+      box.innerHTML = "Loading results...";
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const cardColor = config.card_color || defaultConfig.card_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
+      // Listen for results data from Firebase
+      window.fb.listen("results", results => {
+        // Filter results based on search text
+        results = results.filter(r =>
+          smartMatch(r.title + " " + r.status, searchText)
+        );
 
-      resultsListContainer.innerHTML = results.map(result => `
-        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
-          ${result.result_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
-          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${result.result_title}</h3>
-          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${result.result_status}</p>
+        // Sort results by latest createdAt
+        results.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        // Handle empty state
+        if (results.length === 0) {
+          box.innerHTML = "No results available";
+          return;
+        }
+
+        // Clear container before rendering
+        box.innerHTML = "";
+
+        // Render result cards
+        results.forEach(result => {
+          box.innerHTML += `
+        <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)">
+          <h3 style="font-weight:700">
+            ${result.title.replace(/'/g, "\\'")}
+            ${result.isNew ? '<span style="color:red;font-size:12px;margin-left:6px;">NEW</span>' : ''}
+          </h3>
+          <p><b>Status:</b> ${result.status}</p>
         </div>
-      `).join('');
+      `;
+        });
+      });
     }
 
+    /* // ===== renderAdmitsList Function ===== */
     function renderAdmitsList() {
-      const admitsListContainer = document.getElementById('admits-list-container');
-      if (!admitsListContainer) return;
+      const box = document.getElementById("admits-list-container");
+      if (!box) return;
 
-      const admits = allData.filter(item => item.type === 'admit').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
-      
-      if (admits.length === 0) {
-        admitsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No admit cards available</p>';
-        return;
-      }
+      // Show loading state
+      box.innerHTML = "Loading admit cards...";
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const cardColor = config.card_color || defaultConfig.card_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
+      // Listen for admit cards data from Firebase
+      window.fb.listen("admits", admits => {
+        // Filter admits based on search text
+        admits = admits.filter(a =>
+          smartMatch(a.title + " " + a.status, searchText)
+        );
 
-      admitsListContainer.innerHTML = admits.map(admit => `
-        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
-          ${admit.admit_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
-          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admit.admit_title}</h3>
-          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${admit.admit_status}</p>
+        // Sort admits by latest createdAt
+        admits.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        // Handle empty state
+        if (admits.length === 0) {
+          box.innerHTML = "No admit cards available";
+          return;
+        }
+
+        // Clear container before rendering
+        box.innerHTML = "";
+
+        // Render admit card items
+        admits.forEach(admit => {
+          box.innerHTML += `
+        <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)">
+          <h3 style="font-weight:700">
+            ${admit.title.replace(/'/g, "\\'")}
+            ${admit.isNew ? '<span style="color:red;font-size:12px;margin-left:6px;">NEW</span>' : ''}
+          </h3>
+          <p><b>Status:</b> ${admit.status}</p>
         </div>
-      `).join('');
+      `;
+        });
+      });
     }
 
+    /* // ===== renderAdmissionsList Function ===== */
     function renderAdmissionsList() {
-      const admissionsListContainer = document.getElementById('admissions-list-container');
-      if (!admissionsListContainer) return;
 
-      const admissions = allData.filter(item => item.type === 'admission').sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
-      
-      if (admissions.length === 0) {
-        admissionsListContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No admissions available</p>';
+      const box = document.getElementById("admissions-list-container");
+      if (!box) return;
+
+      // Show loading state
+      box.innerHTML = "Loading admissions...";
+
+      // Listen for admissions data from Firebase
+      window.fb.listen("admissions", admissions => {
+        // Filter admissions based on search text
+        admissions = admissions.filter(ad =>
+          smartMatch(ad.title + " " + ad.status, searchText)
+        );
+
+        // Sort admissions by latest createdAt
+        admissions.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        // Handle empty state
+        if (admissions.length === 0) {
+          box.innerHTML = "No admissions available";
+          return;
+        }
+
+        // Clear container before rendering
+        box.innerHTML = "";
+
+        // Render admission cards
+        admissions.forEach(admission => {
+          box.innerHTML += `
+          <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)">
+            <h3 style="font-weight:700">
+              ${admission.title.replace(/'/g, "\\'")}
+              ${admission.isNew ? '<span style="color:red;font-size:12px;margin-left:6px;">NEW</span>' : ''}
+            </h3>
+            <p><b>Status:</b> ${admission.status}</p>
+          </div>
+        `;
+        });
+      });
+    }
+
+    /* ===== renderNotices Function ===== */
+    function renderNotices() {
+      if (!window.fb) {
+        setTimeout(renderNotices, 300);
         return;
       }
 
-      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const cardColor = config.card_color || defaultConfig.card_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const noticeBox = document.getElementById("notice-list");
+      if (!noticeBox) return;
 
-      admissionsListContainer.innerHTML = admissions.map(admission => `
-        <div style="background-color: ${cardColor}; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative;">
-          ${admission.admission_is_new ? `<span style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: ${accentColor}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: ${baseFontSize * 0.7}px; font-weight: 700;">NEW</span>` : ''}
-          <h3 style="color: ${textColor}; font-size: ${baseFontSize * 1.1}px; font-weight: 700; margin-bottom: 0.5rem; font-family: ${customFont}, sans-serif;">${admission.admission_title}</h3>
-          <p style="color: ${accentColor}; font-size: ${baseFontSize * 0.9}px; font-weight: 600;"><strong>Status:</strong> ${admission.admission_status}</p>
+      window.fb.listen("notices", notices => {
+        // sort latest first
+        notices.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        // show only latest 5
+        const latest = notices.slice(0, 5);
+
+        if (latest.length === 0) {
+          noticeBox.innerHTML = "<p>No notices available</p>";
+          return;
+        }
+
+        noticeBox.innerHTML = latest.map(n => `
+        <div style="
+          padding:6px 0;
+          border-bottom:1px dashed #f59e0b;
+          font-size:14px;
+          font-weight:600;
+          color:#374151;
+        ">
+          • ${n.title}
+          ${n.isNew ? `<span style="color:red;font-size:11px;margin-left:6px;">NEW</span>` : ""}
         </div>
-      `).join('');
+      `).join("");
+      });
     }
 
+    /* // ===== editJobFromFirebase Function ===== */
+    window.editJobFromFirebase = function (job) {
+      const form = document.querySelector('#job-form');
+      if (!form) return;
+
+      // Fill form fields with job details
+      const titleField = document.querySelector('#job-title');
+      const postsField = document.querySelector('#job-posts');
+      const statusField = document.querySelector('#job-status');
+
+      if (titleField) titleField.value = job.title || "";
+      if (postsField) postsField.value = job.posts || "";
+      if (statusField) statusField.value = job.status || "";
+
+      // Mark form with edit mode (store job ID)
+      form.setAttribute('data-edit-id', job.id);
+
+      // Show status message
+      showStatusMessage('job-status-msg', 'Edit mode enabled', 'info');
+    };
+
+
+
+    /* // ===== switchAdminTab Function ===== */
     function switchAdminTab(tabName) {
       const app = document.getElementById('app');
       if (!app) return;
 
+      // Toggle active class on tabs
       const tabs = app.querySelectorAll('.admin-tab');
       tabs.forEach(tab => {
-        if (tab.getAttribute('data-tab') === tabName) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
+        const isActive = tab.getAttribute('data-tab') === tabName;
+        tab.classList.toggle('active', isActive);
       });
 
+      // Hide all tab contents
       const tabContents = app.querySelectorAll('.admin-tab-content');
       tabContents.forEach(content => {
         content.style.display = 'none';
       });
 
+      // Show the selected tab content
       const activeContent = app.querySelector(`#admin-tab-${tabName}`);
       if (activeContent) {
         activeContent.style.display = 'block';
       }
     }
 
-    function updateAdminLists() {
-      const app = document.getElementById('app');
-      if (!app) return;
 
-      const jobs = allData.filter(item => item.type === 'job');
-      const results = allData.filter(item => item.type === 'result');
-      const admits = allData.filter(item => item.type === 'admit');
-      const admissions = allData.filter(item => item.type === 'admission');
 
-      const jobsList = app.querySelector('#jobs-list');
-      const resultsList = app.querySelector('#results-list');
-      const admitsList = app.querySelector('#admits-list');
-      const admissionsList = app.querySelector('#admissions-list');
 
-      if (jobsList) {
-        if (jobs.length === 0) {
-          jobsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No jobs added yet</p>';
-        } else {
-          jobsList.innerHTML = jobs.map(job => `
-            <div class="item-row">
-              <span style="flex: 1;">${job.job_title}</span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="edit-btn" onclick="editItem('${job.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
-                <button class="delete-btn" onclick="deleteItem('${job.__backendId}')">Delete</button>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-
-      if (resultsList) {
-        if (results.length === 0) {
-          resultsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No results added yet</p>';
-        } else {
-          resultsList.innerHTML = results.map(result => `
-            <div class="item-row">
-              <span style="flex: 1;">${result.result_title}</span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="edit-btn" onclick="editItem('${result.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
-                <button class="delete-btn" onclick="deleteItem('${result.__backendId}')">Delete</button>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-
-      if (admitsList) {
-        if (admits.length === 0) {
-          admitsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No admit cards added yet</p>';
-        } else {
-          admitsList.innerHTML = admits.map(admit => `
-            <div class="item-row">
-              <span style="flex: 1;">${admit.admit_title}</span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="edit-btn" onclick="editItem('${admit.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
-                <button class="delete-btn" onclick="deleteItem('${admit.__backendId}')">Delete</button>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-
-      if (admissionsList) {
-        if (admissions.length === 0) {
-          admissionsList.innerHTML = '<p style="text-align: center; color: #666; padding: 1rem;">No admissions added yet</p>';
-        } else {
-          admissionsList.innerHTML = admissions.map(admission => `
-            <div class="item-row">
-              <span style="flex: 1;">${admission.admission_title}</span>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="edit-btn" onclick="editItem('${admission.__backendId}')" style="background-color: #2563eb; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Edit</button>
-                <button class="delete-btn" onclick="deleteItem('${admission.__backendId}')">Delete</button>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-
-      const jobsCount = app.querySelector('#admin-tab-jobs h5');
-      const resultsCount = app.querySelector('#admin-tab-results h5');
-      const admitsCount = app.querySelector('#admin-tab-admits h5');
-      const admissionsCount = app.querySelector('#admin-tab-admissions h5');
-
-      if (jobsCount) jobsCount.textContent = `Existing Jobs (${jobs.length})`;
-      if (resultsCount) resultsCount.textContent = `Existing Results (${results.length})`;
-      if (admitsCount) admitsCount.textContent = `Existing Admit Cards (${admits.length})`;
-      if (admissionsCount) admissionsCount.textContent = `Existing Admissions (${admissions.length})`;
-    }
-
-    function updateSampleDataBanner() {
-      const app = document.getElementById('app');
-      if (!app) return;
-
-      const adminContent = app.querySelector('#admin-content');
-      if (!adminContent) return;
-
-      let banner = app.querySelector('#sample-data-banner');
-      
-      if (allData.length === 0 && !isSampleDataAdded) {
-        if (!banner) {
-          banner = document.createElement('div');
-          banner.id = 'sample-data-banner';
-          banner.className = 'sample-data-banner';
-          banner.innerHTML = `
-            <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Demo ke liye Sample Data Add karein!</p>
-            <button id="add-sample-data-btn" class="add-sample-btn">
-              Sample Data Add Karein (9 Items)
-            </button>
-          `;
-          adminContent.insertBefore(banner, adminContent.firstChild);
-          
-          const addBtn = app.querySelector('#add-sample-data-btn');
-          if (addBtn) {
-            addBtn.addEventListener('click', addSampleData);
-          }
-        }
-      } else if (banner) {
-        banner.remove();
-      }
-    }
-
-    async function addSampleData() {
-      if (!sdkReady || !window.dataSdk) {
-        const statusMsg = document.createElement('p');
-        statusMsg.textContent = 'SDK not ready yet. Please wait...';
-        statusMsg.style.color = '#ef4444';
-        statusMsg.style.textAlign = 'center';
-        statusMsg.style.marginTop = '0.5rem';
-        document.getElementById('sample-data-banner').appendChild(statusMsg);
-        setTimeout(() => statusMsg.remove(), 2000);
+    /* // ===== copyUPIId Function ===== */
+    function copyUPIId() {
+      const upiId = donationConfig.upiId;
+      if (!upiId) {
+        showPaymentStatus("UPI not available", "error");
         return;
       }
 
-      const btn = document.getElementById('add-sample-data-btn');
-      if (!btn) return;
+      // Modern clipboard API support
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(upiId)
+          .then(() => {
+            showPaymentStatus("✓ UPI ID Copied!", "success");
+          })
+          .catch(() => {
+            // Fallback if copy fails
+            showPaymentStatus("UPI ID: " + upiId, "info");
+          });
+      } else {
+        // Fallback if clipboard API not supported
+        showPaymentStatus("UPI ID: " + upiId, "info");
+      }
+    }
 
-      btn.disabled = true;
-      btn.textContent = 'Adding Sample Data...';
+    /* // ===== openUPIPay Function ===== */
+    function openUPIPay(amount) {
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      try {
-        const sampleData = [
-          {
-            type: 'job',
-            job_title: 'BPSC 69th Combined Competitive Exam 2024',
-            job_posts: '500+ Posts',
-            job_status: 'Application Started - Last Date: 15 March 2024',
-            job_is_new: true,
-            created_at: Date.now() - 8000
-          },
-          {
-            type: 'job',
-            job_title: 'Railway Group D Recruitment 2024',
-            job_posts: '50000+ Posts',
-            job_status: 'Coming Soon - March 2024',
-            job_is_new: true,
-            created_at: Date.now() - 7000
-          },
-          {
-            type: 'job',
-            job_title: 'SSC CGL 2024 Notification',
-            job_posts: '8000+ Posts',
-            job_status: 'Registration Open - Apply Now',
-            job_is_new: false,
-            created_at: Date.now() - 6000
-          },
-          {
-            type: 'result',
-            result_title: 'BPSC 68th Preliminary Result 2024',
-            result_status: 'Declared - Check Now',
-            result_is_new: true,
-            created_at: Date.now() - 5000
-          },
-          {
-            type: 'result',
-            result_title: 'Bihar Police Constable Result',
-            result_status: 'Available Now - Download',
-            result_is_new: false,
-            created_at: Date.now() - 4000
-          },
-          {
-            type: 'admit',
-            admit_title: 'BPSC 69th Preliminary Admit Card',
-            admit_status: 'Released - Download Now',
-            admit_is_new: true,
-            created_at: Date.now() - 3000
-          },
-          {
-            type: 'admit',
-            admit_title: 'SSC CHSL Tier-1 Admit Card 2024',
-            admit_status: 'Released - Download Now',
-            admit_is_new: false,
-            created_at: Date.now() - 2000
-          },
-          {
-            type: 'admission',
-            admission_title: 'IIT JEE Main 2024 Registration',
-            admission_status: 'Application Open - Last Date: 20 March',
-            admission_is_new: true,
-            created_at: Date.now() - 1000
-          },
-          {
-            type: 'admission',
-            admission_title: 'Bihar B.Ed Entrance 2024',
-            admission_status: 'Form Available - Apply Now',
-            admission_is_new: false,
-            created_at: Date.now()
+      // Construct UPI payment URL
+      const upiUrl =
+        "upi://pay?pa=" + encodeURIComponent(donationConfig.upiId) +
+        "&pn=" + encodeURIComponent(donationConfig.payeeName) +
+        "&am=" + encodeURIComponent(amount) +
+        "&cu=INR";
+
+      if (isMobile) {
+        // 📱 MOBILE → open UPI app directly
+        window.location.href = upiUrl;
+      } else {
+        // 💻 DESKTOP → show QR + auto-scroll
+        showDynamicQR(amount);
+
+        setTimeout(() => {
+          const qrElement = document.getElementById("dynamic-qr");
+          if (qrElement) {
+            qrElement.scrollIntoView({ behavior: "smooth", block: "center" });
           }
-        ];
+        }, 100);
+      }
+    }
 
-        for (const item of sampleData) {
-          await window.dataSdk.create(item);
+    /* // ===== Custom Pay Button Click Handler ===== */
+    document.addEventListener("click", function (e) {
+      if (e.target?.id === "custom-pay-btn") {
+        const input = document.getElementById("custom-amount");
+        if (!input) return;
+
+        // Parse entered amount safely
+        const amount = parseInt(input.value, 10);
+
+        // Validate amount
+        if (isNaN(amount) || amount <= 0) {
+          showPaymentStatus("Please enter a valid amount", "error");
+          return;
         }
 
-        isSampleDataAdded = true;
-        btn.textContent = 'Sample Data Added!';
-        
-        setTimeout(() => {
-          const banner = document.getElementById('sample-data-banner');
-          if (banner) banner.remove();
-        }, 2000);
-
-      } catch (error) {
-        btn.disabled = false;
-        btn.textContent = 'Failed - Try Again';
+        // Trigger UPI payment flow
+        openUPIPay(amount);
       }
+    });
+
+    /* // ===== showDynamicQR Function ===== */
+    function showDynamicQR(amount) {
+      // Construct UPI payment link
+      const upiLink =
+        "upi://pay?pa=" + encodeURIComponent(donationConfig.upiId) +
+        "&pn=" + encodeURIComponent(donationConfig.payeeName) +
+        "&am=" + encodeURIComponent(amount) +
+        "&cu=INR";
+
+      const qrDiv = document.getElementById("dynamic-qr");
+      if (!qrDiv) return;
+
+      // Render QR code + message
+      qrDiv.innerHTML = `
+    <img 
+      src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}"
+      alt="UPI Payment QR"
+      style="width:200px;display:block;margin:0 auto"
+    >
+    <p style="font-size:13px;text-align:center;font-weight:700;margin-top:6px">
+      Scan to pay ₹${amount}
+    </p>
+  `;
     }
 
-    // Copy UPI ID function
-    function copyUPIId() {
-      const upiId = '9709701986@ybl';
-      
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(upiId).then(() => {
-          showPaymentStatus('✓ UPI ID Copied!', 'success');
-        }).catch(() => {
-          showPaymentStatus('UPI ID: ' + upiId, 'info');
-        });
-      } else {
-        showPaymentStatus('UPI ID: ' + upiId, 'info');
-      }
-    }
-
-    // Open UPI Payment function
-    function openUPIPay(amount) {
-      const upiId = '9709701986@ybl';
-      const name = 'Social Service';
-      const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
-      
-      window.open(upiUrl, '_blank');
-      showPaymentStatus('Opening payment app...', 'info');
-    }
-
-    // Show payment status message
+    /* // ===== showPaymentStatus Function ===== */
     function showPaymentStatus(message, type) {
       const statusDiv = document.getElementById('payment-status');
       if (!statusDiv) return;
-      
+
+      // Set message and make visible
       statusDiv.textContent = message;
       statusDiv.style.display = 'block';
-      
-      if (type === 'success') {
-        statusDiv.style.backgroundColor = '#d1fae5';
-        statusDiv.style.color = '#065f46';
-      } else if (type === 'error') {
-        statusDiv.style.backgroundColor = '#fee2e2';
-        statusDiv.style.color = '#991b1b';
-      } else {
-        statusDiv.style.backgroundColor = '#dbeafe';
-        statusDiv.style.color = '#1e40af';
+
+      // Apply styles based on type
+      switch (type) {
+        case 'success':
+          statusDiv.style.backgroundColor = '#d1fae5'; // light green
+          statusDiv.style.color = '#065f46';           // dark green
+          break;
+        case 'error':
+          statusDiv.style.backgroundColor = '#fee2e2'; // light red
+          statusDiv.style.color = '#991b1b';           // dark red
+          break;
+        default:
+          statusDiv.style.backgroundColor = '#dbeafe'; // light blue
+          statusDiv.style.color = '#1e40af';           // dark blue
+          break;
       }
-      
+
+      // Hide after 3 seconds
       setTimeout(() => {
         statusDiv.style.display = 'none';
       }, 3000);
     }
 
-    window.deleteItem = async function(backendId) {
-      if (!sdkReady || !window.dataSdk) return;
 
+
+
+    /* // ===== editItem Function ===== */
+    window.editItem = function (backendId) {
       const item = allData.find(d => d.__backendId === backendId);
       if (!item) return;
 
       const app = document.getElementById('app');
       if (!app) return;
 
-      const deleteBtn = app.querySelector(`button[onclick="deleteItem('${backendId}')"]`);
-      if (deleteBtn) {
-        const originalText = deleteBtn.innerHTML;
-        deleteBtn.innerHTML = 'Deleting...';
-        deleteBtn.disabled = true;
-      }
+      // Helper to fill form fields
+      function fillForm({ titleSel, postsSel, statusSel, isNewSel, formSel, btnText, tabName }, values) {
+        const titleInput = app.querySelector(titleSel);
+        const postsInput = postsSel ? app.querySelector(postsSel) : null;
+        const statusInput = app.querySelector(statusSel);
+        const isNewCheckbox = app.querySelector(isNewSel);
+        const submitBtn = app.querySelector(`${formSel} button[type="submit"]`);
 
-      const result = await window.dataSdk.delete(item);
-      
-      if (deleteBtn) {
-        deleteBtn.disabled = false;
-        if (!result.isOk) {
-          deleteBtn.innerHTML = 'Failed';
-          setTimeout(() => {
-            deleteBtn.innerHTML = originalText;
-          }, 2000);
+        if (titleInput) titleInput.value = values.title || '';
+        if (postsInput) postsInput.value = values.posts || '';
+        if (statusInput) statusInput.value = values.status || '';
+        if (isNewCheckbox) isNewCheckbox.checked = values.isNew || false;
+
+        if (submitBtn) {
+          submitBtn.textContent = btnText;
+          submitBtn.setAttribute('data-edit-id', backendId);
         }
+
+        switchAdminTab(tabName);
       }
-    }
 
-    window.editItem = function(backendId) {
-      const item = allData.find(d => d.__backendId === backendId);
-      if (!item) return;
-
-      const app = document.getElementById('app');
-      if (!app) return;
-
+      // Handle different item types
       if (item.type === 'job') {
-        const titleInput = app.querySelector('#job-title');
-        const postsInput = app.querySelector('#job-posts');
-        const statusInput = app.querySelector('#job-status');
-        const isNewCheckbox = app.querySelector('#job-is-new');
-        const submitBtn = app.querySelector('#job-form button[type="submit"]');
-        
-        titleInput.value = item.job_title || '';
-        postsInput.value = item.job_posts || '';
-        statusInput.value = item.job_status || '';
-        isNewCheckbox.checked = item.job_is_new || false;
-        
-        submitBtn.textContent = 'Update Job';
-        submitBtn.setAttribute('data-edit-id', backendId);
-        
-        switchAdminTab('jobs');
+        fillForm(
+          {
+            titleSel: '#job-title',
+            postsSel: '#job-posts',
+            statusSel: '#job-status',
+            isNewSel: '#job-is-new',
+            formSel: '#job-form',
+            btnText: 'Update Job',
+            tabName: 'jobs'
+          },
+          {
+            title: item.job_title,
+            posts: item.job_posts,
+            status: item.job_status,
+            isNew: item.job_is_new
+          }
+        );
       } else if (item.type === 'result') {
-        const titleInput = app.querySelector('#result-title');
-        const statusInput = app.querySelector('#result-status');
-        const isNewCheckbox = app.querySelector('#result-is-new');
-        const submitBtn = app.querySelector('#result-form button[type="submit"]');
-        
-        titleInput.value = item.result_title || '';
-        statusInput.value = item.result_status || '';
-        isNewCheckbox.checked = item.result_is_new || false;
-        
-        submitBtn.textContent = 'Update Result';
-        submitBtn.setAttribute('data-edit-id', backendId);
-        
-        switchAdminTab('results');
+        fillForm(
+          {
+            titleSel: '#result-title',
+            statusSel: '#result-status',
+            isNewSel: '#result-is-new',
+            formSel: '#result-form',
+            btnText: 'Update Result',
+            tabName: 'results'
+          },
+          {
+            title: item.result_title,
+            status: item.result_status,
+            isNew: item.result_is_new
+          }
+        );
       } else if (item.type === 'admit') {
-        const titleInput = app.querySelector('#admit-title');
-        const statusInput = app.querySelector('#admit-status');
-        const isNewCheckbox = app.querySelector('#admit-is-new');
-        const submitBtn = app.querySelector('#admit-form button[type="submit"]');
-        
-        titleInput.value = item.admit_title || '';
-        statusInput.value = item.admit_status || '';
-        isNewCheckbox.checked = item.admit_is_new || false;
-        
-        submitBtn.textContent = 'Update Admit Card';
-        submitBtn.setAttribute('data-edit-id', backendId);
-        
-        switchAdminTab('admits');
+        fillForm(
+          {
+            titleSel: '#admit-title',
+            statusSel: '#admit-status',
+            isNewSel: '#admit-is-new',
+            formSel: '#admit-form',
+            btnText: 'Update Admit Card',
+            tabName: 'admits'
+          },
+          {
+            title: item.admit_title,
+            status: item.admit_status,
+            isNew: item.admit_is_new
+          }
+        );
       } else if (item.type === 'admission') {
-        const titleInput = app.querySelector('#admission-title');
-        const statusInput = app.querySelector('#admission-status');
-        const isNewCheckbox = app.querySelector('#admission-is-new');
-        const submitBtn = app.querySelector('#admission-form button[type="submit"]');
-        
-        titleInput.value = item.admission_title || '';
-        statusInput.value = item.admission_status || '';
-        isNewCheckbox.checked = item.admission_is_new || false;
-        
-        submitBtn.textContent = 'Update Admission';
-        submitBtn.setAttribute('data-edit-id', backendId);
-        
-        switchAdminTab('admissions');
+        fillForm(
+          {
+            titleSel: '#admission-title',
+            statusSel: '#admission-status',
+            isNewSel: '#admission-is-new',
+            formSel: '#admission-form',
+            btnText: 'Update Admission',
+            tabName: 'admissions'
+          },
+          {
+            title: item.admission_title,
+            status: item.admission_status,
+            isNew: item.admission_is_new
+          }
+        );
       }
-    }
+    };
 
+    /* // ===== showStatusMessage Function ===== */
     function showStatusMessage(elementId, message, type) {
       const element = document.getElementById(elementId);
       if (!element) return;
 
+      // Set message text
       element.textContent = message;
-      
-      if (type === 'success') {
-        element.style.color = '#10b981';
-      } else if (type === 'error') {
-        element.style.color = '#ef4444';
-      } else {
-        element.style.color = '#f59e0b';
+
+      // Apply color based on type
+      switch (type) {
+        case 'success':
+          element.style.color = '#10b981'; // green
+          break;
+        case 'error':
+          element.style.color = '#ef4444'; // red
+          break;
+        default:
+          element.style.color = '#f59e0b'; // amber
+          break;
       }
 
+      // Auto-clear message for success/error after 3 seconds
       if (type === 'success' || type === 'error') {
         setTimeout(() => {
           element.textContent = '';
         }, 3000);
       }
-    }
-
-    async function onConfigChange(config) {
-      renderContent(config);
     }
 
     function renderContent(config) {
@@ -950,8 +1628,76 @@
             </marquee>
           </div>
 
+      
+          <!-- 🔍 PAGE SEARCH (Jobs / Results / Admit / Admission) -->
+<div id="page-search-box"
+     style="display:none; margin:14px auto; max-width:520px;
+            background:#ffffff; padding:10px 12px;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.12);
+            display:flex; gap:10px; align-items:center;">
+
+  <input
+    id="page-search-input"
+    type="text"
+    placeholder="Search..."
+    style="
+      flex:1;
+      padding:10px 14px;
+      border-radius:8px;
+      border:1.5px solid ${headerColor};
+      outline:none;
+      font-size:14px;
+    "
+  />
+
+  <button id="page-search-clear"
+          style="
+            background:#ef4444;
+            color:white;
+            border:none;
+            border-radius:8px;
+            padding:8px 12px;
+            cursor:pointer;
+            font-size:14px;
+          ">
+    Clear
+  </button>
+</div>
+
+
           <!-- Home Content -->
           <div id="home-content">
+            <!-- 🔔 NOTICE BOARD -->
+<div id="notice-board"
+  style="
+    display:none;
+    background:#fff7ed;
+    border:2px solid #f59e0b;
+    border-radius:10px;
+    padding:1rem;
+    margin-bottom:1.5rem;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  ">
+
+
+  <h3 style="
+    font-weight:800;
+    color:#b45309;
+    margin-bottom:0.75rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  ">
+    🔔 Latest Notices
+  </h3>
+
+  <div id="notice-list">
+    Loading notices...
+  </div>
+
+</div>
+
             <!-- Services Section -->
             <div style="margin-bottom: 1.5rem;">
               <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Our Services</h2>
@@ -1052,21 +1798,46 @@
 
                 <div style="background-color: white; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 400px; margin-left: auto; margin-right: auto;">
                   
+   
+
                   <div style="background-color: #f0f4f8; border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem;">
                     <p style="color: #666; font-size: ${baseFontSize * 0.75}px; font-weight: 600; margin: 0 0 0.5rem 0;">📱 UPI ID</p>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
-                      <p id="upi-id-text" style="color: ${headerColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin: 0; font-family: monospace;">9709701986@ybl</p>
+                      <p id="upi-id-text" style="color: ${headerColor}; font-size: ${baseFontSize * 0.95}px; font-weight: 700; margin: 0; font-family: monospace;">Loading....</p>
                       <button id="copy-upi-btn" class="donate-btn" style="background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: ${baseFontSize * 0.75}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s;">📋 Copy</button>
                     </div>
                   </div>
 
-                  <p style="color: #666; font-size: ${baseFontSize * 0.8}px; font-weight: 600; margin: 0 0 0.75rem 0;">Quick Donate Amount:</p>
-                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;">
-                    <button data-amount="10" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹10</button>
-                    <button data-amount="20" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹20</button>
-                    <button data-amount="50" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹50</button>
-                    <button data-amount="100" class="quick-donate-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.6rem; border-radius: 8px; font-size: ${baseFontSize * 0.85}px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">₹100</button>
-                  </div>
+<div class="donate-controls">
+
+  <p class="donate-title">Quick Donate Amount</p>
+
+  <!-- ✅ ONLY QUICK BUTTONS -->
+  <div class="donate-buttons">
+    <button data-amount="10" class="quick-donate-btn">₹10</button>
+    <button data-amount="20" class="quick-donate-btn">₹20</button>
+    <button data-amount="50" class="quick-donate-btn">₹50</button>
+    <button data-amount="100" class="quick-donate-btn">₹100</button>
+  </div>
+
+  <!-- ✅ CUSTOM AMOUNT (OUTSIDE GRID) -->
+  <div class="custom-donate">
+    <input 
+      type="number"
+      id="custom-amount"
+      placeholder="Enter amount ₹"
+      min="1"
+    >
+    <button id="custom-pay-btn">Pay</button>
+  </div>
+
+  <!-- ✅ QR AREA -->
+  <div id="dynamic-qr"></div>
+
+</div>
+
+
+                  <!-- 🔴 GENERATED QR WILL APPEAR HERE -->
 
                   <div id="payment-status" style="margin-top: 0.75rem; padding: 0.5rem; border-radius: 6px; font-size: ${baseFontSize * 0.8}px; font-weight: 600; display: none;"></div>
                 </div>
@@ -1142,12 +1913,16 @@
           <!-- Jobs Content -->
           <div id="jobs-content" style="display: none;">
             <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Government Jobs</h2>
+            
+
             <div id="jobs-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
           </div>
 
           <!-- Results Content -->
           <div id="results-content" style="display: none;">
             <h2 style="color: ${headerColor}; font-size: ${baseFontSize * 1.5}px; font-weight: 800; margin-bottom: 1rem; text-align: center;">Latest Results</h2>
+           
+
             <div id="results-list-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
           </div>
 
@@ -1170,7 +1945,36 @@
               
               <!-- Login Form -->
               <div id="admin-login" style="background-color: rgba(255,255,255,0.95); border-radius: 8px; padding: 1.5rem;">
-                <input type="password" id="admin-password" placeholder="Enter Admin Password" style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: ${baseFontSize}px; margin-bottom: 1rem; box-sizing: border-box;">
+<!-- Admin Email -->
+  <input
+    type="email"
+    id="admin-email"
+    placeholder="Admin Email"
+    style="
+      width:100%;
+      padding:0.75rem;
+      border:2px solid #ddd;
+      border-radius:8px;
+      margin-bottom:0.75rem;
+      font-size:16px;
+    "
+  >
+
+  <!-- Admin Password -->
+  <input
+    type="password"
+    id="admin-password"
+    placeholder="Password"
+    style="
+      width:100%;
+      padding:0.75rem;
+      border:2px solid #ddd;
+      border-radius:8px;
+      margin-bottom:1rem;
+      font-size:16px;
+    "
+  >
+
                 <button id="admin-login-btn" style="width: 100%; background: linear-gradient(135deg, ${accentColor} 0%, ${headerColor} 100%); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 700; font-size: ${baseFontSize}px; cursor: pointer;">
                   Login
                 </button>
@@ -1185,6 +1989,8 @@
                   <div class="admin-tab" data-tab="results" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Results</div>
                   <div class="admin-tab" data-tab="admits" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Admits</div>
                   <div class="admin-tab" data-tab="admissions" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Admissions</div>
+                  <div class="admin-tab" data-tab="notices" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Notices</div>
+                  <div class="admin-tab" data-tab="donation" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Donation</div>
                 </div>
 
                 <!-- Jobs Tab -->
@@ -1292,9 +2098,152 @@
                   </div>
                 </div>
 
-                <button id="admin-close-btn" style="width: 100%; background-color: rgba(255,255,255,0.2); color: white; padding: 0.75rem; border: none; border-radius: 6px; font-weight: 600; font-size: ${baseFontSize * 0.9}px; cursor: pointer; backdrop-filter: blur(10px);">
-                  Close Panel
-                </button>
+                <!-- Notices Tab -->
+<div id="admin-tab-notices" class="admin-tab-content"
+     style="display:none; background-color:white; border-radius:8px; padding:1.5rem; margin-bottom:1rem;">
+
+  <h4 style="
+    color:#2563eb;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:1rem;
+  ">
+    Add New Notice
+  </h4>
+
+  <form id="notice-form"
+        style="display:flex; flex-direction:column; gap:0.75rem;">
+
+    <textarea
+  id="notice-title"
+  placeholder="Notice text (same as WhatsApp message)"
+  required
+  style="padding:0.6rem;border:1px solid #ddd;border-radius:6px;
+         font-size:14px;min-height:80px;resize:vertical;font-family:inherit;">
+</textarea>
+
+
+    <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#374151;">
+  <input type="checkbox" id="notice-is-new"
+         style="width:18px;height:18px;cursor:pointer;">
+  <span>Mark as NEW?</span>
+</label>
+
+
+    <button type="submit"
+      style="
+        background:linear-gradient(135deg,#10b981,#2563eb);
+        color:white;
+        padding:0.75rem;
+        border:none;
+        border-radius:6px;
+        font-weight:600;
+        font-size:14px;
+        cursor:pointer;
+      ">
+      Add Notice
+    </button>
+
+  </form>
+
+  <p id="notice-status-msg"
+     style="
+       margin-top:0.75rem;
+       text-align:center;
+       font-weight:600;
+       font-size:14px;
+     ">
+  </p>
+
+  <div style="margin-top:1.5rem; border-top:2px solid #eee; padding-top:1rem;">
+    <h5 style="
+      color:#2563eb;
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:0.75rem;
+    ">
+      Existing Notices
+    </h5>
+
+    <div id="notices-list"
+         style="display:flex; flex-direction:column; gap:0.5rem; max-height:260px; overflow-y:auto;">
+    </div>
+  </div>
+
+</div>
+
+
+
+                <!-- Donation Settings Tab -->
+<div id="admin-tab-donation" class="admin-tab-content"
+     style="display:none; background-color:white; border-radius:8px; padding:1.5rem;">
+
+  <h4 style="color:#2563eb; font-size:18px; font-weight:700; margin-bottom:1rem;">
+    Donation Settings
+  </h4>
+
+  <!-- CURRENT VALUES -->
+  <div style="
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    border-radius:6px;
+    padding:0.75rem;
+    margin-bottom:1rem;
+    font-size:14px;
+  ">
+    <p><b>Current UPI ID:</b> <span id="current-upi">—</span></p>
+    <p><b>Current Payee Name:</b> <span id="current-payee">—</span></p>
+  </div>
+
+  <!-- FORM -->
+  <form id="donation-form" style="display:flex; flex-direction:column; gap:0.75rem;">
+
+    <input
+      type="text"
+      id="donation-upi"
+      placeholder="UPI ID (e.g. 9709701986@ybl)"
+      style="padding:0.6rem; border:1px solid #ddd; border-radius:6px;"
+      required
+    >
+
+    <input
+      type="text"
+      id="donation-name"
+      placeholder="Payee Name (e.g. NAJIS CYBER CAFE)"
+      style="padding:0.6rem; border:1px solid #ddd; border-radius:6px;"
+      required
+    >
+
+    <button type="submit"
+      style="
+        background:linear-gradient(135deg,#10b981,#2563eb);
+        color:white;
+        padding:0.75rem;
+        border:none;
+        border-radius:6px;
+        font-weight:700;
+        cursor:pointer;
+      ">
+      Save Donation Settings
+    </button>
+
+  </form>
+
+  <p id="donation-status-msg"
+     style="margin-top:0.75rem; font-weight:600; text-align:center;">
+  </p>
+</div>
+
+
+
+                <div style="margin-top:1.5rem; padding-top:1rem; border-top:2px dashed rgba(255,255,255,0.4);">
+  <button id="admin-close-btn"
+    style="width:100%; background:linear-gradient(135deg,#0ea5e9,#14b8a6);
+    color:white; padding:0.9rem; border:none; border-radius:8px; font-weight:700;">
+    Close Admin Panel
+  </button>
+</div>
+
               </div>
             </div>
           </div>
@@ -1320,17 +2269,57 @@
               <p style="font-size: ${baseFontSize * 0.7}px; color: ${textColor}; opacity: 0.7; margin: 0; font-weight: 500;">© 2025 All Rights Reserved</p>
             </div>
           </div>
+
+          <!-- 🔔 Floating Notice Button -->
+<button id="noticeToggleBtn"
+  style="
+    position:fixed;
+    top:40%;
+    right:0;
+    z-index:9999;
+    background:#f59e0b;
+    color:white;
+    border:none;
+    border-radius:8px 0 0 8px;
+    padding:10px 14px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  ">
+  🔔
+</button>
+
         </main>
+        <!-- ⬆️ Scroll To Top Button -->
+<button id="scrollTopBtn"
+  style="
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    z-index:9999;
+    display:none;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:44px;
+    height:44px;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  ">
+  ⬆️
+</button>
+
       `;
 
       setupEventListeners();
-      updateSampleDataBanner();
-      updateAdminLists();
     }
+
 
     function setupEventListeners() {
       const app = document.getElementById('app');
-      
+
       // Copy UPI Button
       const copyUpiBtn = app.querySelector('#copy-upi-btn');
       if (copyUpiBtn) {
@@ -1339,13 +2328,43 @@
 
       // Donate Buttons
       const donateButtons = app.querySelectorAll('.quick-donate-btn');
+
       donateButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
+          // remove active from all
+          donateButtons.forEach(b => b.classList.remove('active'));
+
+          // add active to clicked
+          this.classList.add('active');
+
           const amount = this.getAttribute('data-amount');
           openUPIPay(amount);
         });
       });
-      
+
+      // 🔴 when user types custom amount → remove quick button highlight
+      const customAmountInput = document.getElementById("custom-amount");
+
+      if (customAmountInput) {
+        customAmountInput.addEventListener("input", () => {
+          document
+            .querySelectorAll(".quick-donate-btn")
+            .forEach(btn => btn.classList.remove("active"));
+        });
+      }
+
+      // 🔴 when Pay button clicked → remove quick button highlight
+      const payBtn = document.getElementById("custom-pay-btn");
+
+      if (payBtn) {
+        payBtn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".quick-donate-btn")
+            .forEach(btn => btn.classList.remove("active"));
+        });
+      }
+
+
       const adminTrigger = app.querySelector('#admin-trigger');
       const adminPanel = app.querySelector('#admin-panel');
       const adminLoginBtn = app.querySelector('#admin-login-btn');
@@ -1356,348 +2375,360 @@
       const adminCloseBtn = app.querySelector('#admin-close-btn');
 
       if (adminTrigger && adminPanel) {
-        adminTrigger.addEventListener('click', function() {
+        adminTrigger.addEventListener('click', function () {
           clickCount++;
-          
+
           if (clickTimer) clearTimeout(clickTimer);
-          
+
           if (clickCount === 3) {
-            adminPanel.style.display = 'block';
-            clickCount = 0;
-          }
-          
+  adminPanel.style.display = 'block';
+
+// AUTOFOCUS EMAIL INPUT
+setTimeout(() => {
+  const email = document.getElementById('admin-email');
+  if (email) email.focus();
+}, 100);
+
+
+  clickCount = 0;
+}
+
+
           clickTimer = setTimeout(() => {
             clickCount = 0;
           }, 500);
         });
       }
 
-      if (adminLoginBtn && adminPasswordInput) {
-        const doLogin = () => {
-          const password = adminPasswordInput.value.trim();
-          const encKey = 'YWRtaW4xMjM=';
-          let isValid = false;
-          
-          try {
-            isValid = (btoa(password) === encKey);
-          } catch(e) {
-            isValid = false;
-          }
-          
-          if (isValid) {
-            adminLogin.style.display = 'none';
-            adminContent.style.display = 'block';
-            isAdminLoggedIn = true;
-            adminError.style.display = 'none';
-            adminPasswordInput.value = '';
-            switchAdminTab('jobs');
-            updateSampleDataBanner();
-          } else {
-            adminError.style.display = 'block';
-            setTimeout(() => {
-              adminError.style.display = 'none';
-            }, 2000);
-          }
-        };
+     // 🔐 ADMIN LOGIN USING FIREBASE AUTH
+if (adminLoginBtn) {
+  adminLoginBtn.addEventListener("click", async () => {
+    const email = document.getElementById("admin-email").value.trim();
+    const password = document.getElementById("admin-password").value.trim();
 
-        adminLoginBtn.addEventListener('click', doLogin);
-        adminPasswordInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') doLogin();
-        });
-      }
+    if (!email || !password) {
+      adminError.style.display = "block";
+      adminError.innerText = "Email & password required";
+      return;
+    }
+
+   try {
+  await signInWithEmailAndPassword(window.auth, email, password);
+
+  // ✅ LOGIN SUCCESS UI UPDATE
+  adminError.style.display = "none";
+  adminLogin.style.display = "none";
+  adminContent.style.display = "block";
+  isAdminLoggedIn = true;
+
+  // Load admin data
+  switchAdminTab("jobs");
+  loadAdminJobs();
+  loadAdminResults();
+  loadAdminAdmits();
+  loadAdminAdmissions();
+  loadAdminNotices();
+
+} catch (err) {
+  console.error(err);
+  adminError.style.display = "block";
+  adminError.innerText = "Invalid login";
+}
+
+  });
+}
 
       if (adminCloseBtn && adminPanel) {
         adminCloseBtn.addEventListener('click', () => {
           adminPanel.style.display = 'none';
-          adminLogin.style.display = 'block';
-          adminContent.style.display = 'none';
-          adminPasswordInput.value = '';
-          isAdminLoggedIn = false;
         });
       }
 
+
       const adminTabs = app.querySelectorAll('.admin-tab');
       adminTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
+        tab.addEventListener('click', function () {
           const tabName = this.getAttribute('data-tab');
           switchAdminTab(tabName);
         });
       });
 
+
+      /* Job Form Submission */
       const jobForm = app.querySelector('#job-form');
       if (jobForm) {
         jobForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          
-          if (!sdkReady || !window.dataSdk) {
-            showStatusMessage('job-status-msg', 'SDK not ready. Please refresh page.', 'error');
+
+          const title = document.querySelector('#job-title').value.trim();
+          const posts = document.querySelector('#job-posts').value.trim();
+          const status = document.querySelector('#job-status').value.trim();
+          const isNew = document.querySelector('#job-is-new').checked;
+
+
+          if (!title || !posts || !status) {
+            alert("Please fill all fields");
             return;
           }
-          
-          const submitBtn = jobForm.querySelector('button[type="submit"]');
-          const editId = submitBtn.getAttribute('data-edit-id');
-          
-          const title = app.querySelector('#job-title').value.trim();
-          const posts = app.querySelector('#job-posts').value.trim();
-          const status = app.querySelector('#job-status').value.trim();
-          const isNew = app.querySelector('#job-is-new').checked;
-          
+
+          const editId = jobForm.getAttribute("data-edit-id");
+
+          // 🔁 UPDATE JOB
           if (editId) {
-            const item = allData.find(d => d.__backendId === editId);
-            if (item) {
-              showStatusMessage('job-status-msg', 'Updating job...', 'info');
-              
-              const result = await window.dataSdk.update({
-                ...item,
-                job_title: title,
-                job_posts: posts,
-                job_status: status,
-                job_is_new: isNew
-              });
-              
-              if (result.isOk) {
-                showStatusMessage('job-status-msg', 'Job updated successfully!', 'success');
-                jobForm.reset();
-                submitBtn.textContent = 'Add Job';
-                submitBtn.removeAttribute('data-edit-id');
-              } else {
-                showStatusMessage('job-status-msg', 'Failed to update job!', 'error');
-              }
-            }
-          } else {
-            if (allData.length >= 999) {
-              showStatusMessage('job-status-msg', 'Maximum limit of 999 items reached!', 'error');
-              return;
-            }
-            
-            showStatusMessage('job-status-msg', 'Adding job...', 'info');
-            submitBtn.disabled = true;
-            
-            const result = await window.dataSdk.create({
-              type: 'job',
-              job_title: title,
-              job_posts: posts,
-              job_status: status,
-              job_is_new: isNew,
-              created_at: Date.now()
+            await window.fb.update("jobs", editId, {
+              title,
+              posts,
+              status,
+              isNew
             });
-            
-            submitBtn.disabled = false;
-            
-            if (result.isOk) {
-              showStatusMessage('job-status-msg', 'Job added successfully!', 'success');
-              jobForm.reset();
-            } else {
-              showStatusMessage('job-status-msg', 'Failed to add job! Please try again.', 'error');
-            }
+
+
+            jobForm.removeAttribute("data-edit-id");
+            jobForm.reset();
+
+
+            const btn = jobForm.querySelector('button[type="submit"]');
+            btn.textContent = "Add Job";
+
+            showStatusMessage('job-status-msg', 'Job updated successfully', 'success');
+            return;
           }
+
+
+          // ➕ ADD NEW JOB
+          await window.fb.add("jobs", {
+            title,
+            posts,
+            status,
+            isNew,
+            createdAt: Date.now()
+          });
+
+
+          showStatusMessage('job-status-msg', 'Job added successfully', 'success');
+          jobForm.reset();
         });
       }
 
-      const resultForm = app.querySelector('#result-form');
+      /* Result Form Submission */
+      const resultForm = document.querySelector('#result-form');
+
       if (resultForm) {
         resultForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          
-          if (!sdkReady || !window.dataSdk) {
-            showStatusMessage('result-status-msg', 'SDK not ready. Please refresh page.', 'error');
-            return;
-          }
-          
-          const submitBtn = resultForm.querySelector('button[type="submit"]');
-          const editId = submitBtn.getAttribute('data-edit-id');
-          
-          const title = app.querySelector('#result-title').value.trim();
-          const status = app.querySelector('#result-status').value.trim();
-          const isNew = app.querySelector('#result-is-new').checked;
-          
+
+          const title = document.querySelector('#result-title').value.trim();
+          const status = document.querySelector('#result-status').value.trim();
+          const isNew = document.querySelector('#result-is-new').checked;
+
+          if (!title || !status) return alert("Fill all fields");
+
+          const editId = resultForm.getAttribute("data-edit-id");
+
           if (editId) {
-            const item = allData.find(d => d.__backendId === editId);
-            if (item) {
-              showStatusMessage('result-status-msg', 'Updating result...', 'info');
-              
-              const result = await window.dataSdk.update({
-                ...item,
-                result_title: title,
-                result_status: status,
-                result_is_new: isNew
-              });
-              
-              if (result.isOk) {
-                showStatusMessage('result-status-msg', 'Result updated successfully!', 'success');
-                resultForm.reset();
-                submitBtn.textContent = 'Add Result';
-                submitBtn.removeAttribute('data-edit-id');
-              } else {
-                showStatusMessage('result-status-msg', 'Failed to update result!', 'error');
-              }
-            }
-          } else {
-            if (allData.length >= 999) {
-              showStatusMessage('result-status-msg', 'Maximum limit of 999 items reached!', 'error');
-              return;
-            }
-            
-            showStatusMessage('result-status-msg', 'Adding result...', 'info');
-            submitBtn.disabled = true;
-            
-            const result = await window.dataSdk.create({
-              type: 'result',
-              result_title: title,
-              result_status: status,
-              result_is_new: isNew,
-              created_at: Date.now()
+            await window.fb.update("results", editId, {
+              title,
+              status,
+              isNew
             });
-            
-            submitBtn.disabled = false;
-            
-            if (result.isOk) {
-              showStatusMessage('result-status-msg', 'Result added successfully!', 'success');
-              resultForm.reset();
-            } else {
-              showStatusMessage('result-status-msg', 'Failed to add result!', 'error');
-            }
+
+            resultForm.removeAttribute("data-edit-id");
+            showStatusMessage('result-status-msg', 'Result updated successfully', 'success');
+          } else {
+            await window.fb.add("results", {
+              title,
+              status,
+              isNew,
+              createdAt: Date.now()
+            });
+            showStatusMessage('result-status-msg', 'Result added successfully', 'success');
           }
+          resultForm.reset();
+
+          const btn = resultForm.querySelector('button[type="submit"]');
+          btn.textContent = "Add Result";
+
+
         });
+
       }
 
-      const admitForm = app.querySelector('#admit-form');
+      /* Admit Form Submission */
+      const admitForm = document.querySelector('#admit-form');
+
       if (admitForm) {
         admitForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          
-          if (!sdkReady || !window.dataSdk) {
-            showStatusMessage('admit-status-msg', 'SDK not ready. Please refresh page.', 'error');
+
+          const title = document.querySelector('#admit-title').value.trim();
+          const status = document.querySelector('#admit-status').value.trim();
+          const isNew = document.querySelector('#admit-is-new').checked;
+
+          if (!title || !status) {
+            alert("Fill all fields");
             return;
           }
-          
-          const submitBtn = admitForm.querySelector('button[type="submit"]');
-          const editId = submitBtn.getAttribute('data-edit-id');
-          
-          const title = app.querySelector('#admit-title').value.trim();
-          const status = app.querySelector('#admit-status').value.trim();
-          const isNew = app.querySelector('#admit-is-new').checked;
-          
+
+          const editId = admitForm.getAttribute("data-edit-id");
+
+          // 🔁 UPDATE ADMIT
           if (editId) {
-            const item = allData.find(d => d.__backendId === editId);
-            if (item) {
-              showStatusMessage('admit-status-msg', 'Updating admit card...', 'info');
-              
-              const result = await window.dataSdk.update({
-                ...item,
-                admit_title: title,
-                admit_status: status,
-                admit_is_new: isNew
-              });
-              
-              if (result.isOk) {
-                showStatusMessage('admit-status-msg', 'Admit card updated successfully!', 'success');
-                admitForm.reset();
-                submitBtn.textContent = 'Add Admit Card';
-                submitBtn.removeAttribute('data-edit-id');
-              } else {
-                showStatusMessage('admit-status-msg', 'Failed to update admit card!', 'error');
-              }
-            }
-          } else {
-            if (allData.length >= 999) {
-              showStatusMessage('admit-status-msg', 'Maximum limit of 999 items reached!', 'error');
-              return;
-            }
-            
-            showStatusMessage('admit-status-msg', 'Adding admit card...', 'info');
-            submitBtn.disabled = true;
-            
-            const result = await window.dataSdk.create({
-              type: 'admit',
-              admit_title: title,
-              admit_status: status,
-              admit_is_new: isNew,
-              created_at: Date.now()
+            await window.fb.update("admits", editId, {
+              title,
+              status,
+              isNew
             });
-            
-            submitBtn.disabled = false;
-            
-            if (result.isOk) {
-              showStatusMessage('admit-status-msg', 'Admit card added successfully!', 'success');
-              admitForm.reset();
-            } else {
-              showStatusMessage('admit-status-msg', 'Failed to add admit card!', 'error');
-            }
+
+            admitForm.removeAttribute("data-edit-id");
+            showStatusMessage('admit-status-msg', 'Admit Card updated successfully', 'success');
           }
+          // ➕ ADD NEW ADMIT
+          else {
+            await window.fb.add("admits", {
+              title,
+              status,
+              isNew,
+              createdAt: Date.now()
+            });
+
+            showStatusMessage('admit-status-msg', 'Admit Card added successfully', 'success');
+          }
+
+          admitForm.reset();
+
+          const btn = admitForm.querySelector('button[type="submit"]');
+          btn.textContent = "Add Admit Card";
         });
       }
 
-      const admissionForm = app.querySelector('#admission-form');
+
+      /* Admission Form Submission */
+      const admissionForm = document.querySelector('#admission-form');
+
       if (admissionForm) {
         admissionForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          
-          if (!sdkReady || !window.dataSdk) {
-            showStatusMessage('admission-status-msg', 'SDK not ready. Please refresh page.', 'error');
+
+          const title = document.querySelector('#admission-title').value.trim();
+          const status = document.querySelector('#admission-status').value.trim();
+          const isNew = document.querySelector('#admission-is-new').checked;
+
+          if (!title || !status) return alert("Fill all fields");
+
+          const editId = admissionForm.getAttribute("data-edit-id");
+
+          if (editId) {
+            await window.fb.update("admissions", editId, {
+              title,
+              status,
+              isNew
+            });
+
+            admissionForm.removeAttribute("data-edit-id");
+            showStatusMessage('admission-status-msg', 'Admission updated', 'success');
+
+          } else {
+            await window.fb.add("admissions", {
+              title,
+              status,
+              isNew,
+              createdAt: Date.now()
+            });
+
+            showStatusMessage('admission-status-msg', 'Admission added successfully', 'success');
+          }
+
+          admissionForm.reset();
+
+        });
+
+      }
+
+
+      const noticeForm = document.getElementById("notice-form");
+
+if (noticeForm) {
+  noticeForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("notice-title").value.trim();
+    const isNew = document.getElementById("notice-is-new").checked;
+
+   if (editingNoticeId) {
+  await window.fb.update("notices", editingNoticeId, {
+    title,
+    isNew
+  });
+  editingNoticeId = null;
+} else {
+  await window.fb.add("notices", {
+    title,
+    isNew,
+    createdAt: Date.now()
+  });
+}
+
+noticeForm.reset();
+document.querySelector("#notice-form button").innerText = "Add Notice";
+
+
+    noticeForm.reset();
+    showStatusMessage("notice-status-msg", "Notice added", "success");
+  });
+}
+
+
+      /* Donation Settings Form Submission */
+      const donationForm = document.querySelector('#donation-form');
+
+      if (donationForm) {
+        donationForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const upiInput = document.getElementById('donation-upi');
+          const nameInput = document.getElementById('donation-name');
+          const submitBtn = donationForm.querySelector('button[type="submit"]');
+
+          const upiId = upiInput.value.trim();
+          const payeeName = nameInput.value.trim();
+
+          if (!upiId || !payeeName) {
+            alert("Please fill all fields");
             return;
           }
-          
-          const submitBtn = admissionForm.querySelector('button[type="submit"]');
-          const editId = submitBtn.getAttribute('data-edit-id');
-          
-          const title = app.querySelector('#admission-title').value.trim();
-          const status = app.querySelector('#admission-status').value.trim();
-          const isNew = app.querySelector('#admission-is-new').checked;
-          
-          if (editId) {
-            const item = allData.find(d => d.__backendId === editId);
-            if (item) {
-              showStatusMessage('admission-status-msg', 'Updating admission...', 'info');
-              
-              const result = await window.dataSdk.update({
-                ...item,
-                admission_title: title,
-                admission_status: status,
-                admission_is_new: isNew
-              });
-              
-              if (result.isOk) {
-                showStatusMessage('admission-status-msg', 'Admission updated successfully!', 'success');
-                admissionForm.reset();
-                submitBtn.textContent = 'Add Admission';
-                submitBtn.removeAttribute('data-edit-id');
-              } else {
-                showStatusMessage('admission-status-msg', 'Failed to update admission!', 'error');
-              }
-            }
-          } else {
-            if (allData.length >= 999) {
-              showStatusMessage('admission-status-msg', 'Maximum limit of 999 items reached!', 'error');
-              return;
-            }
-            
-            showStatusMessage('admission-status-msg', 'Adding admission...', 'info');
-            submitBtn.disabled = true;
-            
-            const result = await window.dataSdk.create({
-              type: 'admission',
-              admission_title: title,
-              admission_status: status,
-              admission_is_new: isNew,
-              created_at: Date.now()
-            });
-            
-            submitBtn.disabled = false;
-            
-            if (result.isOk) {
-              showStatusMessage('admission-status-msg', 'Admission added successfully!', 'success');
-              admissionForm.reset();
-            } else {
-              showStatusMessage('admission-status-msg', 'Failed to add admission!', 'error');
-            }
-          }
+
+          submitBtn.textContent = "Saving...";
+          submitBtn.disabled = true;
+
+          await window.fb.update("settings", "donation", {
+            upiId,
+            payeeName,
+            updatedAt: Date.now()
+          });
+
+
+
+          // ✅ CLEAR INPUTS AFTER SAVE
+          upiInput.value = "";
+          nameInput.value = "";
+
+          // ✅ RESET BUTTON
+          submitBtn.textContent = "Save Donation Settings";
+          submitBtn.disabled = false;
+
+          showStatusMessage(
+            'donation-status-msg',
+            'Donation settings updated successfully',
+            'success'
+          );
         });
       }
 
+
+
       const navLinks = app.querySelectorAll('.nav-link');
       navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
           const page = this.getAttribute('data-page');
@@ -1709,11 +2740,11 @@
 
       const cards = app.querySelectorAll('.service-card, .quick-link-item');
       cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
+        card.addEventListener('mouseenter', function () {
           this.style.transform = 'translateY(-2px)';
           this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
         });
-        card.addEventListener('mouseleave', function() {
+        card.addEventListener('mouseleave', function () {
           this.style.transform = 'translateY(0)';
           this.style.boxShadow = '';
         });
@@ -1721,105 +2752,204 @@
 
       const buttons = app.querySelectorAll('a[href^="https://wa.me"], a[href^="tel:"]');
       buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
+        button.addEventListener('mouseenter', function () {
           this.style.transform = 'scale(1.05)';
         });
-        button.addEventListener('mouseleave', function() {
+        button.addEventListener('mouseleave', function () {
           this.style.transform = 'scale(1)';
         });
       });
 
+
+      // 🔍 PAGE SEARCH + CLEAR (FIXED)
+      const searchInput = document.getElementById("page-search-input");
+      const clearBtn = document.getElementById("page-search-clear");
+
+      if (searchInput) {
+        searchInput.addEventListener("input", () => {
+          searchText = searchInput.value.toLowerCase();
+
+          if (currentPage === "jobs") renderJobsList();
+          if (currentPage === "results") renderResultsList();
+          if (currentPage === "admits") renderAdmitsList();
+          if (currentPage === "admissions") renderAdmissionsList();
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          searchText = "";
+          searchInput.value = "";
+
+          if (currentPage === "jobs") renderJobsList();
+          if (currentPage === "results") renderResultsList();
+          if (currentPage === "admits") renderAdmitsList();
+          if (currentPage === "admissions") renderAdmissionsList();
+        });
+      }
+
+      // ⬆️ Scroll To Top Logic (FINAL – FOR #app SCROLL)
+      const scrollBtn = document.getElementById("scrollTopBtn");
+      const appScroll = document.getElementById("app");
+
+      if (scrollBtn && appScroll) {
+        appScroll.addEventListener("scroll", () => {
+          if (appScroll.scrollTop > 80) {
+            scrollBtn.style.display = "block";
+          } else {
+            scrollBtn.style.display = "none";
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          appScroll.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        });
+      }
+      // 🔔 Notice Toggle Button Logic
+const noticeBtn = document.getElementById("noticeToggleBtn");
+const noticeBoard = document.getElementById("notice-board");
+
+if (noticeBtn && noticeBoard) {
+  noticeBtn.addEventListener("click", () => {
+    if (noticeBoard.style.display === "none") {
+      noticeBoard.style.display = "block";
+      noticeBoard.scrollIntoView({ behavior: "smooth" });
+    } else {
+      noticeBoard.style.display = "none";
+    }
+  });
+}
+
+
+
       updatePageContent();
     }
 
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [
-          {
-            get: () => config.background_color || defaultConfig.background_color,
-            set: (value) => {
-              config.background_color = value;
-              window.elementSdk.setConfig({ background_color: value });
-            }
-          },
-          {
-            get: () => config.header_color || defaultConfig.header_color,
-            set: (value) => {
-              config.header_color = value;
-              window.elementSdk.setConfig({ header_color: value });
-            }
-          },
-          {
-            get: () => config.card_color || defaultConfig.card_color,
-            set: (value) => {
-              config.card_color = value;
-              window.elementSdk.setConfig({ card_color: value });
-            }
-          },
-          {
-            get: () => config.accent_color || defaultConfig.accent_color,
-            set: (value) => {
-              config.accent_color = value;
-              window.elementSdk.setConfig({ accent_color: value });
-            }
-          },
-          {
-            get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => {
-              config.text_color = value;
-              window.elementSdk.setConfig({ text_color: value });
-            }
-          }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (value) => {
-            config.font_family = value;
-            window.elementSdk.setConfig({ font_family: value });
-          }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (value) => {
-            config.font_size = value;
-            window.elementSdk.setConfig({ font_size: value });
-          }
-        }
-      };
-    }
+    /* // ===== init Function ===== */
+    function init() {
+      // Render default content
+      renderContent(defaultConfig);
 
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ["shop_name", config.shop_name || defaultConfig.shop_name],
-        ["csc_id", config.csc_id || defaultConfig.csc_id],
-        ["owner_name", config.owner_name || defaultConfig.owner_name],
-        ["tagline", config.tagline || defaultConfig.tagline],
-        ["phone_1", config.phone_1 || defaultConfig.phone_1],
-        ["phone_2", config.phone_2 || defaultConfig.phone_2],
-        ["whatsapp", config.whatsapp || defaultConfig.whatsapp],
-        ["location", config.location || defaultConfig.location],
-        ["whatsapp_group", config.whatsapp_group || defaultConfig.whatsapp_group],
-        ["whatsapp_channel", config.whatsapp_channel || defaultConfig.whatsapp_channel]
-      ]);
-    }
+      // Initialize homepage counts
+      initHomeCounts();
 
-    async function init() {
-      await initDataSDK();
+      // Initialize navigation counts
+      initNavCounts();
+
+      // Load latest previews for homepage
+      initHomeLatestPreviews();
+
+      // Load donation settings from Firebase
+      loadDonationSettings();
+
       
-      if (window.elementSdk) {
-        window.elementSdk.init({
-          defaultConfig,
-          onConfigChange,
-          mapToCapabilities,
-          mapToEditPanelValues
-        });
-      } else {
-        renderContent(defaultConfig);
-      }
+      renderNotices();
+
     }
 
     init();
+
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b1fbde655e9594e',t:'MTc2NjQwNzc5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+  <script type="module">
+    // ===== Firebase Imports =====
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, getDocs,
+      onSnapshot, deleteDoc, doc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // ===== Firebase Auth Imports =====
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+
+
+
+    // ===== Firebase Config =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOTep_8D6gs8kwQYeu1oSyd3hYrrug5mo",
+      authDomain: "najis-cyber-cafe-csc-portal.firebaseapp.com",
+      projectId: "najis-cyber-cafe-csc-portal",
+      storageBucket: "najis-cyber-cafe-csc-portal.firebasestorage.app",
+      messagingSenderId: "765017212270",
+      appId: "1:765017212270:web:5574679a4dfe4981996d7f"
+    };
+
+    // ===== Initialize Firebase App & Firestore =====
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ===== Initialize Firebase Auth =====
+    const auth = getAuth(app);
+    window.auth = auth;
+
+
+    // Expose Firestore globally (optional)
+    window.db = db;
+
+    // ===== Custom Firebase Helper Methods =====
+    window.fb = {
+      // Add new document
+      add: async (col, data) => await addDoc(collection(db, col), data),
+
+      // Update existing document
+      update: async (col, id, data) => await updateDoc(doc(db, col, id), data),
+
+      // Delete document
+      remove: async (col, id) => await deleteDoc(doc(db, col, id)),
+
+      // Listen for real-time updates
+      listen: (col, cb) =>
+        onSnapshot(collection(db, col), snap =>
+          cb(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+        )
+    };
+  </script>
+
+  <!-- ===== QR Popup ===== -->
+  <div id="qr-popup" style="
+       display:none;
+       position:fixed;
+       inset:0;
+       background:rgba(0,0,0,0.7);
+       z-index:99999;
+       /* display:flex; */
+       align-items:center;
+       justify-content:center;
+     ">
+    <div style="
+       background:white;
+       padding:20px;
+       border-radius:10px;
+       text-align:center;
+       max-width:300px;
+       /* width:90%; */
+     ">
+      <!-- Dynamic amount text -->
+      <h3 id="qr-amount-text">Amount: ₹10</h3>
+
+
+      <!-- Instruction -->
+      <p style="font-size:12px;color:#555;margin-top:6px">
+        Scan QR and enter the same amount
+      </p>
+
+      <!-- Close Button -->
+      <button onclick="closeQrPopup()"
+        style="margin-top:10px;padding:6px 12px;border:none;border-radius:6px;background:#ef4444;color:white;cursor:pointer">
+        Close
+      </button>
+    </div>
+  </div>
+
+</body>
+
 </html>
