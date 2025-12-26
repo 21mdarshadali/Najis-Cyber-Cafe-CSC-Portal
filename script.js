@@ -1700,7 +1700,7 @@ jobs.forEach(job => {
                   <div class="admin-tab" data-tab="admits" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Admits</div>
                   <div class="admin-tab" data-tab="admissions" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Admissions</div>
                   <div class="admin-tab" data-tab="notices" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Notices</div>
-                  <div class="admin-tab" data-tab="donation" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Donation</div>
+                  // <div class="admin-tab" data-tab="donation" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Donation</div>
                 </div>
 
                 <!-- Jobs Tab -->
@@ -2561,4 +2561,5 @@ if (noticeBtn && noticeBoard) {
     }
 
     init();
+
 
