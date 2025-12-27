@@ -5,9 +5,9 @@
       csc_id: "CSC12345678",
       owner_name: "Mohammad Najis",
       tagline: "सभी सरकारी सेवाएं एक जगह",
-      phone_1: "9876543210",
-      phone_2: "8765432109",
-      whatsapp: "919876543210",
+      phone_1: "9572188557",
+      phone_2: "9262755215",
+      whatsapp: "9572188557",
       location: "पटना, बिहार",
       whatsapp_group: "https://chat.whatsapp.com/G2Is5h6YrSWE9P0ISrxyUi",
       whatsapp_channel: "https://whatsapp.com/channel/0029VakVRGQBqbr7ZrYZ8l42",
@@ -1700,7 +1700,7 @@ jobs.forEach(job => {
                   <div class="admin-tab" data-tab="admits" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 80px;">Admits</div>
                   <div class="admin-tab" data-tab="admissions" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Admissions</div>
                   <div class="admin-tab" data-tab="notices" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Notices</div>
-                  // <div class="admin-tab" data-tab="donation" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Donation</div>
+                <!-- <div class="admin-tab" data-tab="donation" style="flex: 1; text-align: center; padding: 0.75rem; color: white; font-weight: 600; font-size: ${baseFontSize * 0.85}px; border-radius: 6px; min-width: 100px;">Donation</div> -->
                 </div>
 
                 <!-- Jobs Tab -->
@@ -2561,5 +2561,6 @@ if (noticeBtn && noticeBoard) {
     }
 
     init();
+
 
 
