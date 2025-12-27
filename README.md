@@ -31,10 +31,7 @@ A modern and dynamic **CSC / Cyber Cafe Web Portal** designed to manage governme
 
 ---
 
-## 🔐 Admin Panel Access
 
-- Click on **Shop Name (3 times)** to open Admin Panel  
-- Admin password is encrypted inside the code  
 
 ---
 
@@ -67,3 +64,4 @@ Web Developer
 ## 📜 License
 
 This project is for educational and local business use.
+
