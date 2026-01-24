@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+  <!-- ===== Basic Meta Information ===== -->
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India CSC Portal</title>
+  <link rel="icon" href="data:,">
+
+  <!-- ===== Google Fonts: Poppins ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="./style.css">
+  <!-- ===== Global CSS Reset & Base Styles ===== -->
+  <!-- ===== View Transition (Optional) ===== -->
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+  </style>
+
+  <!-- ===== Tailwind CSS (Dev Mode) ===== -->
+  <!-- ⚠️ For development only. Remove in production -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <!-- 🔝 Top Info Bar -->
+  <div id="top-time-bar">
+    <span class="portal-title">
+      Najis Cyber Cafe – Official Service Portal &nbsp;|&nbsp;
+    </span>
+    <span id="live-time"></span>
+  </div>
+
+
+  <div id="app" style="width: 100%; height: 100%; overflow: auto;"></div>
+
+  <script src="./script.js"></script>
+
+  <script type="module">
+    // ===== Firebase Imports =====
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, getDocs,
+      onSnapshot, deleteDoc, doc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // ===== Firebase Auth Imports =====
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+
+
+
+    // ===== Firebase Config =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOTep_8D6gs8kwQYeu1oSyd3hYrrug5mo",
+      authDomain: "najis-cyber-cafe-csc-portal.firebaseapp.com",
+      projectId: "najis-cyber-cafe-csc-portal",
+      storageBucket: "najis-cyber-cafe-csc-portal.firebasestorage.app",
+      messagingSenderId: "765017212270",
+      appId: "1:765017212270:web:5574679a4dfe4981996d7f"
+    };
+
+    // ===== Initialize Firebase App & Firestore =====
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ===== Initialize Firebase Auth =====
+    const auth = getAuth(app);
+    window.auth = auth;
+
+
+    // Expose Firestore globally (optional)
+    window.db = db;
+
+    // ===== Custom Firebase Helper Methods =====
+    window.fb = {
+      // Add new document
+      add: async (col, data) => await addDoc(collection(db, col), data),
+
+      // Update existing document
+      update: async (col, id, data) => await updateDoc(doc(db, col, id), data),
+
+      // Delete document
+      remove: async (col, id) => await deleteDoc(doc(db, col, id)),
+
+      // Listen for real-time updates
+      listen: (col, cb) =>
+        onSnapshot(collection(db, col), snap =>
+          cb(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+        )
+    };
+  </script>
+
+  <!-- ===== QR Popup ===== -->
+  <div id="qr-popup" style="
+       display:none;
+       position:fixed;
+       inset:0;
+       background:rgba(0,0,0,0.7);
+       z-index:99999;
+       /* display:flex; */
+       align-items:center;
+       justify-content:center;
+     ">
+    <div style="
+       background:white;
+       padding:20px;
+       border-radius:10px;
+       text-align:center;
+       max-width:300px;
+       /* width:90%; */
+     ">
+      <!-- Dynamic amount text -->
+      <h3 id="qr-amount-text">Amount: ₹10</h3>
+
+
+      <!-- Instruction -->
+      <p style="font-size:12px;color:#555;margin-top:6px">
+        Scan QR and enter the same amount
+      </p>
+
+      <!-- Close Button -->
+      <button onclick="closeQrPopup()"
+        style="margin-top:10px;padding:6px 12px;border:none;border-radius:6px;background:#ef4444;color:white;cursor:pointer">
+        Close
+      </button>
+    </div>
+  </div>
+
+
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const options = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      document.getElementById("live-time").innerText =
+        now.toLocaleString('en-IN', options);
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+
+</body>
+
+</html>
